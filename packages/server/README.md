@@ -1,41 +1,22 @@
 # sf-symbols-mcp
 
-[![npm](https://img.shields.io/npm/v/sf-symbols-mcp)](https://www.npmjs.com/package/sf-symbols-mcp)
-[![data](https://img.shields.io/npm/v/sf-symbols-mcp-data?label=data)](https://www.npmjs.com/package/sf-symbols-mcp-data)
-[![CI](https://github.com/bonkey/sf-symbols-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/bonkey/sf-symbols-mcp/actions)
-[![license](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
-
 An MCP server that helps AI agents pick the **right SF Symbol** for a UI
 function — "download the invoice", "archive this message", "show account
 settings" — without hallucinating symbol names.
 
-Every result is a **verified catalog entry** (SF Symbols 7.2, 7,781 symbols,
-7,006 with vision-derived annotations), found through layered retrieval:
+Every result is a **verified catalog entry**, found through layered retrieval:
 query decomposition → lexical search (BM25/FTS5) → local semantic embeddings →
-curated UI-convention priors → visual-description matching → explainable
+curated UI-convention priors → vision-derived glyph annotations → explainable
 ranking with availability and restriction filtering.
 
-**No API keys. No network at query time. No native build steps.** The
-prebuilt catalog and a small embedding model ship in the data package;
-queries run in ~100 ms on the built-in `node:sqlite` plus a 34 MB ONNX model.
+**No API keys. No network at query time. No native build steps.** The prebuilt
+catalog and a small local embedding model ship with the package; queries run
+in ~100 ms on the built-in `node:sqlite` plus a 34 MB ONNX model.
 
-On the project's golden-query benchmark the right symbol family is in the
-top 3 for **98.8%** of decomposed queries (top 5: 100%).
-
-## Installation
-
-Requires Node ≥ 22.13. The install pulls ~110 MB (catalog database +
-embedding model) once; everything afterwards is offline.
-
-**Claude Code:**
-
-```sh
-claude mcp add sf-symbols -- npx -y sf-symbols-mcp
-```
-
-**Claude Desktop / Cursor / any MCP client** — add to your MCP config:
+## Quick start
 
 ```jsonc
+// Claude Code / Claude Desktop / Cursor MCP config
 {
   "mcpServers": {
     "sf-symbols": {
@@ -46,48 +27,22 @@ claude mcp add sf-symbols -- npx -y sf-symbols-mcp
 }
 ```
 
-## Usage
-
-Ask your agent things like:
-
-> *"Which SF Symbol should I use for the download button?"*
-> *"Give me an icon for muting a conversation, must work on iOS 15."*
-> *"What's the filled variant of the bell icon for a selected tab?"*
-
-The agent calls `search_sf_symbols` and gets verified names with reasons:
-
-```jsonc
-// search_sf_symbols { query: "download the invoice", primaryAction: "download", object: "invoice" }
-{
-  "results": [
-    {
-      "name": "tray.and.arrow.down",
-      "score": 0.61,
-      "reason": "standard download icon; semantic similarity",
-      "description": "A rectangular tray, open at the top, has a solid down arrow pointing into its opening…",
-      "family": { "baseName": "tray.and.arrow.down", "variants": [{ "name": "tray.and.arrow.down.fill", "modifiers": ["fill"] }] },
-      "availability": { "iOS": "13.0", "macOS": "10.15", "…": "…" },
-      "warnings": []
-    }
-    // …
-  ]
-}
-```
+Requires Node ≥ 22.13 (for the built-in SQLite module).
 
 ## Tools
 
 | Tool | Purpose |
 |---|---|
-| `search_sf_symbols` | Find symbols for a natural-language UI function. Optional structured fields (`primaryAction`, `object`, `direction`, `state`, `excludedMetaphors`, `platforms`, …) let the calling LLM decompose the query for sharply better ranking. `explain: true` returns the score breakdown. |
+| `search_sf_symbols` | Find symbols for a natural-language UI function. Optional structured fields (`primaryAction`, `object`, `direction`, `state`, `excludedMetaphors`, `platforms`, …) let the calling LLM decompose the query for sharply better ranking. |
 | `get_sf_symbol_info` | Full metadata: availability, categories, family and variants, restriction status, semantic/visual annotations with provenance. |
 | `compare_sf_symbols` | Structured diff of 2–6 candidates: semantics, pairwise visual similarity, availability deltas, when-to-use-which guidance. |
 | `resolve_sf_symbol_variant` | Pick fill/slash/badge/enclosure variants by UI state and platform conventions (selected tab-bar → `.fill`, off → `.slash`, watchOS prefers fill, …). Never invents names. |
 | `find_visually_similar_symbols` | Symbols that *look* alike (CLIP + perceptual hash): confusable glyphs, simpler alternatives. |
 | `update_local_catalog` | Refresh from your locally installed SF Symbols app (macOS). New symbols become searchable immediately; annotations are preserved. |
 
-Results carry scores, one-line reasons, family variants, availability, and
-typed warnings (restricted symbols, renamed inputs, close calls, ambiguous
-glyphs).
+Search results carry scores, one-line reasons, family variants, availability,
+and typed warnings (restricted symbols, renamed inputs, close calls,
+ambiguous glyphs). Pass `explain: true` for the full score breakdown.
 
 ## How it works
 
@@ -102,22 +57,11 @@ renders (Swift, public APIs) ──▶ vision passes (literal → semantic → r
 
 - **Never fabricates**: retrieval happens only over catalog rows; curated
   mappings are CI-validated against the catalog.
-- **Sees the glyphs**: each symbol was rendered locally and described by a
-  vision model in three passes (literal content → UI semantics →
-  reconciliation against the name, with contradictions stored, not hidden),
-  plus per-family variant analysis and cross-model consensus checks.
 - **Family-aware**: `bell/bell.fill/bell.badge/bell.slash` collapse to one
-  result with variants attached; the plain base symbol fronts the family
-  unless your query implies a variant ("muted", "line through it").
+  result with variants attached; semantics are chosen before style.
 - **Explainable**: weighted linear scoring (lexical, semantic, action/object
   match, curated prior, visual) with explicit penalties (direction conflicts,
   antonym actions, excluded metaphors, restrictions, deprecations).
-
-## Versioning
-
-The data package minor-tracks SF Symbols releases; the server takes any
-compatible data version. A new SF Symbols release means a data-package
-update only — `npx` picks it up automatically.
 
 ## Maintainer pipeline (not needed by users)
 
@@ -134,19 +78,18 @@ pnpm eval           # golden-query ranking regression (81 queries)
 pnpm pack-data      # stage packages/data for publishing
 ```
 
-Annotation providers (pick one; ~22,000 requests per full catalog):
+Annotation providers (pick one):
 
-- **OpenRouter** (cheap, default `google/gemini-2.5-flash`, ≈ $15–20 total):
-  `export OPENROUTER_API_KEY=…`, then start with
-  `pnpm annotate pass1 --pilot=50 --yes` and review before the full run.
-  Useful flags: `--concurrency=N`, `--route=<provider>` to pin the upstream,
-  `--shard=i/n` to split a pass across parallel processes.
+- **OpenRouter** (cheap, default): `export OPENROUTER_API_KEY=…` — runs on
+  `google/gemini-2.5-flash` by default (`--model=<id>` to override), full
+  catalog ≈ $3–8. Start with `pnpm annotate pass1 --pilot=50 --yes` and review
+  `generated-local/annotations/<version>/pass1/` before the full run.
 - **Anthropic Batches**: `export ANTHROPIC_API_KEY=…` — `claude-sonnet-5`
   with structured outputs, ≈ $130 per full catalog.
 
 Every annotation stores provenance (model, prompt version, batch id) and
-resumes from per-symbol checkpoints. Releasing: `pnpm publish --access public`
-in `packages/data`, then `packages/server`.
+resumes via per-symbol checkpoints. Releasing: publish `packages/data`
+(version minor tracks SF Symbols releases), then `packages/server`.
 
 ## Data profiles & licensing posture
 
