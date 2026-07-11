@@ -15,6 +15,7 @@ import { buildFamilies } from "sf-symbols-mcp/search/family";
 import { annotatableSymbols, loadExtractedCatalog } from "../catalog.js";
 import { GENERATED_DIR } from "../paths.js";
 import { runBatchPass, type BatchItem } from "./batch.js";
+import { runOpenRouterPass } from "./openrouter.js";
 import { PROMPT_VERSIONS } from "./prompts.js";
 import {
   familyRequest,
@@ -22,29 +23,55 @@ import {
   pass2Request,
   pass3Request,
 } from "./requests.js";
-import { listCheckpoints, readCheckpoint } from "./store.js";
+import { listCheckpoints, readCheckpoint, type PassName } from "./store.js";
 
-const DEFAULT_MODEL = "claude-sonnet-5";
-const CONSENSUS_MODEL = "claude-haiku-4-5";
+type Provider = "anthropic" | "openrouter";
+
+const DEFAULTS: Record<Provider, { model: string; consensusModel: string }> = {
+  anthropic: { model: "claude-sonnet-5", consensusModel: "claude-haiku-4-5" },
+  // Cheap OpenRouter vision models — override with --model=<openrouter id>,
+  // see https://openrouter.ai/models (any vision model with JSON output works).
+  openrouter: {
+    model: "google/gemini-2.5-flash",
+    consensusModel: "openai/gpt-4o-mini",
+  },
+};
+
+function resolveProvider(argv: string[]): Provider {
+  const flag = argv.find((a) => a.startsWith("--provider="))?.split("=")[1];
+  if (flag === "anthropic" || flag === "openrouter") return flag;
+  if (process.env["ANTHROPIC_API_KEY"]) return "anthropic";
+  if (process.env["OPENROUTER_API_KEY"]) return "openrouter";
+  console.error(
+    "No API credential found. Set OPENROUTER_API_KEY (cheap, recommended) or " +
+      "ANTHROPIC_API_KEY, optionally with --provider=openrouter|anthropic.",
+  );
+  process.exit(3);
+}
 
 interface Options {
   pass: string;
   pilot?: number;
   yes: boolean;
+  provider: Provider;
   model: string;
+  consensusModel: string;
 }
 
 function parseOptions(argv: string[]): Options {
   const pass = argv.find((a) => !a.startsWith("--")) ?? "status";
   const pilotArg = argv.find((a) => a.startsWith("--pilot"));
   const modelArg = argv.find((a) => a.startsWith("--model="));
+  const provider = pass === "status" ? "anthropic" : resolveProvider(argv);
   return {
     pass,
     ...(pilotArg && {
       pilot: Number.parseInt(pilotArg.split("=")[1] ?? "50", 10),
     }),
     yes: argv.includes("--yes"),
-    model: modelArg?.split("=")[1] ?? DEFAULT_MODEL,
+    provider,
+    model: modelArg?.split("=")[1] ?? DEFAULTS[provider].model,
+    consensusModel: DEFAULTS[provider].consensusModel,
   };
 }
 
@@ -62,18 +89,21 @@ function pilotSubset(names: string[], n: number): string[] {
 async function confirmSpend(
   requestCount: number,
   approxInputPerReq: number,
-  yes: boolean,
+  opts: Options,
 ): Promise<void> {
-  // Sonnet 5 batch pricing: $1.50/M input, $7.50/M output (50% batch discount
-  // on $3/$15; intro pricing may be lower). Output ~600 tokens/request incl.
-  // adaptive thinking at medium effort.
+  // Anthropic: Sonnet-5 batch rates ($1.50/M in, $7.50/M out, ~600 out/req).
+  // OpenRouter: Gemini-Flash-class rates (~$0.30/M in, ~$2.50/M out).
   const inputM = (requestCount * approxInputPerReq) / 1e6;
   const outputM = (requestCount * 600) / 1e6;
-  const cost = inputM * 1.5 + outputM * 7.5;
+  const cost =
+    opts.provider === "anthropic"
+      ? inputM * 1.5 + outputM * 7.5
+      : inputM * 0.3 + outputM * 2.5;
   console.log(
-    `About to submit ${requestCount} batch requests (~$${cost.toFixed(2)} at Sonnet-5 batch rates).`,
+    `About to submit ${requestCount} requests via ${opts.provider} (${opts.model}), ` +
+      `~$${cost.toFixed(2)} estimated.`,
   );
-  if (!yes) {
+  if (!opts.yes) {
     console.error("Re-run with --yes to confirm the spend.");
     process.exit(3);
   }
@@ -97,9 +127,22 @@ export async function runAnnotate(): Promise<void> {
   const version = catalog.sfSymbolsVersion;
   const rendersDir = join(GENERATED_DIR, "renders", version);
   const symbolsByName = new Map(catalog.symbols.map((s) => [s.name, s]));
-  const client = new Anthropic();
 
   const names = await targetNames(catalog, opts);
+
+  /** Dispatch a pass to the selected transport (Anthropic batches or OpenRouter pool). */
+  const execute = async (args: {
+    pass: PassName;
+    promptVersion: string;
+    model: string;
+    items: BatchItem[];
+    schema: z.ZodType<unknown>;
+  }) => {
+    if (opts.provider === "openrouter") {
+      return runOpenRouterPass({ version, ...args });
+    }
+    return runBatchPass({ client: new Anthropic(), version, ...args });
+  };
 
   const status = async () => {
     for (const pass of ["pass1", "pass2", "pass3", "pass1b", "family"] as const) {
@@ -113,7 +156,7 @@ export async function runAnnotate(): Promise<void> {
     const pending = names.filter((n) => !done.has(n));
     console.log(`pass1: ${pending.length} pending of ${names.length}`);
     if (pending.length === 0) return;
-    await confirmSpend(pending.length, 1000, opts.yes);
+    await confirmSpend(pending.length, 1000, opts);
     const items: BatchItem[] = [];
     for (const name of pending) {
       items.push({
@@ -121,9 +164,7 @@ export async function runAnnotate(): Promise<void> {
         params: await pass1Request(rendersDir, name, opts.model),
       });
     }
-    await runBatchPass({
-      client,
-      version,
+    await execute({
       pass: "pass1",
       promptVersion: PROMPT_VERSIONS.pass1,
       model: opts.model,
@@ -138,7 +179,7 @@ export async function runAnnotate(): Promise<void> {
     const pending = names.filter((n) => havePass1.has(n) && !done.has(n));
     console.log(`pass2: ${pending.length} pending`);
     if (pending.length === 0) return;
-    await confirmSpend(pending.length, 1400, opts.yes);
+    await confirmSpend(pending.length, 1400, opts);
     const items: BatchItem[] = [];
     for (const name of pending) {
       const p1 = await readCheckpoint(version, "pass1", name, Pass1LiteralSchema);
@@ -148,9 +189,7 @@ export async function runAnnotate(): Promise<void> {
         params: await pass2Request(rendersDir, name, opts.model, p1.value),
       });
     }
-    await runBatchPass({
-      client,
-      version,
+    await execute({
       pass: "pass2",
       promptVersion: PROMPT_VERSIONS.pass2,
       model: opts.model,
@@ -165,7 +204,7 @@ export async function runAnnotate(): Promise<void> {
     const pending = names.filter((n) => havePass2.has(n) && !done.has(n));
     console.log(`pass3: ${pending.length} pending`);
     if (pending.length === 0) return;
-    await confirmSpend(pending.length, 2200, opts.yes);
+    await confirmSpend(pending.length, 2200, opts);
     const items: BatchItem[] = [];
     for (const name of pending) {
       const symbol = symbolsByName.get(name) as ExtractedSymbol;
@@ -177,9 +216,7 @@ export async function runAnnotate(): Promise<void> {
         params: await pass3Request(rendersDir, symbol, opts.model, p1.value, p2.value),
       });
     }
-    await runBatchPass({
-      client,
-      version,
+    await execute({
       pass: "pass3",
       promptVersion: PROMPT_VERSIONS.pass3,
       model: opts.model,
@@ -200,7 +237,7 @@ export async function runAnnotate(): Promise<void> {
     );
     console.log(`family: ${targets.length} pending multi-member families`);
     if (targets.length === 0) return;
-    await confirmSpend(targets.length, 1800, opts.yes);
+    await confirmSpend(targets.length, 1800, opts);
     const items: BatchItem[] = [];
     for (const family of targets) {
       const members: { name: string; description: string }[] = [];
@@ -215,9 +252,7 @@ export async function runAnnotate(): Promise<void> {
         params: familyRequest(family.baseName, members, opts.model),
       });
     }
-    await runBatchPass({
-      client,
-      version,
+    await execute({
       pass: "family",
       promptVersion: PROMPT_VERSIONS.family,
       model: opts.model,
@@ -245,20 +280,18 @@ export async function runAnnotate(): Promise<void> {
     }
     console.log(`consensus: ${triggers.length} triggered symbols`);
     if (triggers.length === 0) return;
-    await confirmSpend(triggers.length, 1000, opts.yes);
+    await confirmSpend(triggers.length, 1000, opts);
     const items: BatchItem[] = [];
     for (const name of triggers) {
       items.push({
         key: name,
-        params: await pass1Request(rendersDir, name, CONSENSUS_MODEL, true),
+        params: await pass1Request(rendersDir, name, opts.consensusModel, true),
       });
     }
-    await runBatchPass({
-      client,
-      version,
+    await execute({
       pass: "pass1b",
       promptVersion: PROMPT_VERSIONS.pass1b,
-      model: CONSENSUS_MODEL,
+      model: opts.consensusModel,
       items,
       schema: Pass1LiteralWireSchema,
     });

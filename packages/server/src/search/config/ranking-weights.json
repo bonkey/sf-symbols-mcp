@@ -1,0 +1,27 @@
+{
+  "weights": {
+    "lexical": 0.22,
+    "semantic": 0.26,
+    "actionMatch": 0.16,
+    "objectMatch": 0.1,
+    "curatedPrior": 0.15,
+    "visualDesc": 0.07,
+    "visualEmb": 0.04
+  },
+  "penalties": {
+    "directionConflict": 0.2,
+    "actionConflict": 0.15,
+    "excludedMetaphor": 0.3,
+    "deprecated": 0.25,
+    "restricted": 0.35,
+    "ambiguityRisk": 0.05,
+    "recencyRisk": 0.1,
+    "unannotated": 0.05
+  },
+  "thresholds": {
+    "closeCall": 0.07,
+    "weakSemantic": 0.35,
+    "ftsCandidates": 50,
+    "embeddingCandidates": 50
+  }
+}
