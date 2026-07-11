@@ -21,11 +21,12 @@
     "NOTICE"
   ],
   "scripts": {
-    "build": "tsdown src/index.ts --format esm --out-dir dist --no-external @sfsmcp/schema"
+    "build": "tsdown src/index.ts --format esm --out-dir dist"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
     "@huggingface/transformers": "^4.2.0",
+    "@sf-symbols-mcp/data": "workspace:*",
     "zod": "^4.0.0"
   },
   "devDependencies": {

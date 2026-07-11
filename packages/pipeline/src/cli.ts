@@ -2,6 +2,7 @@
  * Maintainer pipeline CLI: extract | render | features | annotate | build-db.
  * Subcommands are wired in as their milestones land.
  */
+import { runBuildDb } from "./build-db.js";
 import { runExtract } from "./extract.js";
 import { runFeatures } from "./features.js";
 import { runRender } from "./render.js";
@@ -12,6 +13,7 @@ const commands: Record<string, () => Promise<void>> = {
   extract: runExtract,
   render: runRender,
   features: runFeatures,
+  "build-db": runBuildDb,
 };
 
 const run = commands[command ?? ""];
