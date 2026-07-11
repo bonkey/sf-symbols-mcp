@@ -102,16 +102,26 @@ async function callOpenRouter(
     if (attempt > 0) {
       await new Promise((r) => setTimeout(r, 2000 * 2 ** attempt));
     }
-    const response = await fetch(OPENROUTER_URL, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-        "HTTP-Referer": "https://github.com/bonkey/sf-symbols-mcp",
-        "X-Title": "sf-symbols-mcp annotation pipeline",
-      },
-      body: JSON.stringify(body),
-    });
+    let response: Response;
+    try {
+      response = await fetch(OPENROUTER_URL, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+          "HTTP-Referer": "https://github.com/bonkey/sf-symbols-mcp",
+          "X-Title": "sf-symbols-mcp annotation pipeline",
+        },
+        body: JSON.stringify(body),
+        // Hung sockets must fail fast and retry on a fresh connection —
+        // observed stalls otherwise cap throughput regardless of pool size.
+        signal: AbortSignal.timeout(60_000),
+      });
+    } catch (error) {
+      lastError =
+        error instanceof Error ? `${error.name}: ${error.message}` : "network error";
+      continue;
+    }
     if (response.status === 429 || response.status >= 500) {
       lastError = `HTTP ${response.status}`;
       continue;
@@ -154,7 +164,9 @@ export async function runOpenRouterPass<T>(opts: {
   let next = 0;
   let done = 0;
 
-  const worker = async () => {
+  const worker = async (startDelayMs: number) => {
+    // Stagger startup so a wide pool doesn't open all connections at once.
+    await new Promise((r) => setTimeout(r, startDelayMs));
     for (;;) {
       const index = next++;
       const item = opts.items[index];
@@ -188,7 +200,9 @@ export async function runOpenRouterPass<T>(opts: {
   };
 
   const poolSize = Math.min(opts.concurrency ?? 8, opts.items.length);
-  await Promise.all(Array.from({ length: poolSize }, worker));
+  await Promise.all(
+    Array.from({ length: poolSize }, (_, i) => worker(i * 100)),
+  );
   log(`${opts.pass}: ${succeeded} checkpointed, ${failed.length} failed`);
   return { succeeded, failed };
 }
