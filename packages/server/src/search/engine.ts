@@ -469,7 +469,31 @@ export class SearchEngine {
       return { ...candidate, score, resultWarnings, breakdown };
     });
 
-    // ---- Family dedup: best-scoring member represents its family.
+    // ---- Family dedup: the family's score is its best member's score, but
+    // the plain canonical representative fronts the result (semantics before
+    // style variants) — unless the winning member was an exact-name hit, the
+    // query itself implies that variant, or the representative fails the
+    // caller's platform filter.
+    const MODIFIER_INTENTS: Record<string, string[]> = {
+      slash: ["slash", "slashed", "line", "through", "crossed", "strikethrough", "off", "disabled", "muted", "no"],
+      fill: ["fill", "filled", "solid", "selected"],
+      badge: ["badge", "badged", "notification", "dot"],
+    };
+    const stateIntents: Record<string, string> = {
+      off: "slash",
+      disabled: "slash",
+      muted: "slash",
+      selected: "fill",
+      new: "badge",
+    };
+    const impliedModifiers = new Set<string>();
+    for (const [modifier, cues] of Object.entries(MODIFIER_INTENTS)) {
+      if (cues.some((cue) => queryTokens.has(cue))) impliedModifiers.add(modifier);
+    }
+    if (input.state && stateIntents[input.state]) {
+      impliedModifiers.add(stateIntents[input.state] as string);
+    }
+
     const byFamily = new Map<string, (typeof scored)[number]>();
     for (const candidate of scored) {
       const key = candidate.record.baseName;
@@ -477,6 +501,25 @@ export class SearchEngine {
       if (!current || candidate.score > current.score) {
         byFamily.set(key, candidate);
       }
+    }
+    for (const [key, winner] of byFamily) {
+      if (winner.reasons.includes("exact name match")) continue;
+      const winnerModifiers = winner.record.modifiers.map((m) => m.split(".")[0] as string);
+      if (winnerModifiers.some((m) => impliedModifiers.has(m))) continue;
+      const family = this.store.family(key);
+      const representativeName = family?.members[0];
+      if (!representativeName || representativeName === winner.record.name) {
+        continue;
+      }
+      const representative = this.store.getSymbol(representativeName);
+      if (!representative || representative.deprecated) continue;
+      if (
+        input.platforms &&
+        !meetsAvailability(representative.availability, input.platforms)
+      ) {
+        continue;
+      }
+      byFamily.set(key, { ...winner, record: representative });
     }
 
     const results: SearchResult[] = [...byFamily.values()]
