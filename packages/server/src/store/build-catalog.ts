@@ -177,10 +177,16 @@ export function buildDatabase(dbPath: string, inputs: BuildInputs): void {
       const literal = symbolAnnotations?.literal?.value;
       const semantic = symbolAnnotations?.semantic?.value;
       const reconciled = symbolAnnotations?.reconciled?.value;
+      // Mined aliases from glyph-inconsistent reconciliations are unreliable
+      // search text (the blind passes misread the glyph) — keep them out of FTS.
+      const minedAliases =
+        reconciled && reconciled.nameGlyphConsistent
+          ? reconciled.minedAliases
+          : [];
       const keywords = [
         ...(appleKeywords ?? []),
         ...(aliasKeywords.get(symbol.name) ?? []),
-        ...(reconciled?.minedAliases ?? []),
+        ...minedAliases,
       ].join(" ");
       const objects = [
         ...(literal?.primaryObjects ?? []),

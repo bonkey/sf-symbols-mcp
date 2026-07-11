@@ -56,6 +56,7 @@ interface Options {
   provider: Provider;
   model: string;
   consensusModel: string;
+  concurrency: number;
 }
 
 function parseOptions(argv: string[]): Options {
@@ -72,6 +73,10 @@ function parseOptions(argv: string[]): Options {
     provider,
     model: modelArg?.split("=")[1] ?? DEFAULTS[provider].model,
     consensusModel: DEFAULTS[provider].consensusModel,
+    concurrency: Number.parseInt(
+      argv.find((a) => a.startsWith("--concurrency="))?.split("=")[1] ?? "8",
+      10,
+    ),
   };
 }
 
@@ -139,7 +144,7 @@ export async function runAnnotate(): Promise<void> {
     schema: z.ZodType<unknown>;
   }) => {
     if (opts.provider === "openrouter") {
-      return runOpenRouterPass({ version, ...args });
+      return runOpenRouterPass({ version, concurrency: opts.concurrency, ...args });
     }
     return runBatchPass({ client: new Anthropic(), version, ...args });
   };
