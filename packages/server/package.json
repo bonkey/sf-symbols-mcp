@@ -11,7 +11,8 @@
     "sf-symbols-mcp": "./dist/index.js"
   },
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./extract": "./src/extract/index.ts"
   },
   "files": [
     "dist",

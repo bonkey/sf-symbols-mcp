@@ -4,7 +4,8 @@
     "paths": {
       "@sfsmcp/schema": ["./packages/schema/src/index.ts"],
       "@sfsmcp/pipeline": ["./packages/pipeline/src/index.ts"],
-      "sf-symbols-mcp": ["./packages/server/src/index.ts"]
+      "sf-symbols-mcp": ["./packages/server/src/index.ts"],
+      "sf-symbols-mcp/extract": ["./packages/server/src/extract/index.ts"]
     }
   },
   "include": [
