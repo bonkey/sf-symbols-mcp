@@ -27,14 +27,14 @@ async function resolveDbPath(): Promise<string> {
     return fromEnv;
   }
   try {
-    const data = await import("@sf-symbols-mcp/data");
+    const data = await import("sf-symbols-mcp-data");
     if (existsSync(data.catalogDbPath)) return data.catalogDbPath;
     console.error(
-      `@sf-symbols-mcp/data is installed but ${data.catalogDbPath} is missing.`,
+      `sf-symbols-mcp-data is installed but ${data.catalogDbPath} is missing.`,
     );
   } catch {
     console.error(
-      "No catalog database found. Install @sf-symbols-mcp/data or set SF_SYMBOLS_MCP_DB.",
+      "No catalog database found. Install sf-symbols-mcp-data or set SF_SYMBOLS_MCP_DB.",
     );
   }
   process.exit(1);
@@ -44,7 +44,7 @@ async function resolveModelDir(): Promise<string | undefined> {
   const fromEnv = process.env["SF_SYMBOLS_MCP_MODEL_DIR"];
   if (fromEnv && existsSync(fromEnv)) return fromEnv;
   try {
-    const data = await import("@sf-symbols-mcp/data");
+    const data = await import("sf-symbols-mcp-data");
     if (existsSync(data.modelDir)) return data.modelDir;
   } catch {
     // data package absent — transformers.js falls back to its cache.

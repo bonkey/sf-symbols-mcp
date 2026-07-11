@@ -25,7 +25,7 @@ function findModelCache(): string | null {
 
 /**
  * `pnpm pack-data [--profile=default|safe]` — assemble the publishable
- * @sf-symbols-mcp/data package: profile-filtered catalog.db, manifest, and
+ * sf-symbols-mcp-data package: profile-filtered catalog.db, manifest, and
  * the bundled text-embedding model (so users never download anything).
  */
 export async function runPackData(): Promise<void> {
@@ -75,7 +75,7 @@ export async function runPackData(): Promise<void> {
     counts: { symbols: number; annotated: number };
   };
   console.log(
-    `Packed @sf-symbols-mcp/data (profile=${profile}): SF Symbols ${manifest.sfSymbolsVersion}, ` +
+    `Packed sf-symbols-mcp-data (profile=${profile}): SF Symbols ${manifest.sfSymbolsVersion}, ` +
       `${manifest.counts.symbols} symbols, ${manifest.counts.annotated} annotated.`,
   );
 }
