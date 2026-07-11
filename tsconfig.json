@@ -2,12 +2,27 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "paths": {
-      "@sfsmcp/schema": ["./packages/schema/src/index.ts"],
-      "@sfsmcp/pipeline": ["./packages/pipeline/src/index.ts"],
-      "sf-symbols-mcp": ["./packages/server/src/index.ts"],
-      "sf-symbols-mcp/extract": ["./packages/server/src/extract/index.ts"],
-      "sf-symbols-mcp/search/family": ["./packages/server/src/search/family.ts"],
-      "sf-symbols-mcp/embed": ["./packages/server/src/embed/index.ts"]
+      "@sfsmcp/schema": [
+        "./packages/schema/src/index.ts"
+      ],
+      "@sfsmcp/pipeline": [
+        "./packages/pipeline/src/index.ts"
+      ],
+      "sf-symbols-mcp": [
+        "./packages/server/src/index.ts"
+      ],
+      "sf-symbols-mcp/extract": [
+        "./packages/server/src/extract/index.ts"
+      ],
+      "sf-symbols-mcp/search/family": [
+        "./packages/server/src/search/family.ts"
+      ],
+      "sf-symbols-mcp/embed": [
+        "./packages/server/src/embed/index.ts"
+      ],
+      "sf-symbols-mcp/store/build-catalog": [
+        "./packages/server/src/store/build-catalog.ts"
+      ]
     }
   },
   "include": [

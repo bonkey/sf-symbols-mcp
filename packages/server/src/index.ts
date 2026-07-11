@@ -6,6 +6,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { CatalogStore } from "./store/catalog-store.js";
 import { TransformersEmbedder } from "./embed/embedder.js";
 import { registerTools } from "./tools/register.js";
+import { preferredDbPath } from "./update/local-update.js";
 
 const [major, minor] = process.versions.node.split(".").map(Number);
 if ((major ?? 0) < 22 || ((major ?? 0) === 22 && (minor ?? 0) < 13)) {
@@ -51,14 +52,18 @@ async function resolveModelDir(): Promise<string | undefined> {
   return undefined;
 }
 
-const dbPath = await resolveDbPath();
+const shippedDbPath = await resolveDbPath();
+// A locally rebuilt catalog (update_local_catalog) wins when it is newer.
+const dbPath = process.env["SF_SYMBOLS_MCP_DB"]
+  ? shippedDbPath
+  : (preferredDbPath(shippedDbPath) ?? shippedDbPath);
 const store = new CatalogStore(dbPath);
 const embedder = new TransformersEmbedder(await resolveModelDir());
 // Warm the embedding model in the background; early queries run lexical-only.
 void embedder.embedQuery("warmup").catch(() => {});
 
 const server = new McpServer({ name: "sf-symbols-mcp", version: "0.1.0" });
-registerTools(server, store, embedder);
+registerTools(server, store, embedder, shippedDbPath);
 
 await server.connect(new StdioServerTransport());
 console.error(

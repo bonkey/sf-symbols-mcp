@@ -14,7 +14,8 @@
     ".": "./src/index.ts",
     "./extract": "./src/extract/index.ts",
     "./search/family": "./src/search/family.ts",
-    "./embed": "./src/embed/index.ts"
+    "./embed": "./src/embed/index.ts",
+    "./store/build-catalog": "./src/store/build-catalog.ts"
   },
   "files": [
     "dist",

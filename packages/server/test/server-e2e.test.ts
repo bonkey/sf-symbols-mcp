@@ -155,6 +155,41 @@ describe.skipIf(!existsSync(DB_PATH))("MCP server e2e (stdio)", () => {
     expect(impossible.nearestAlternatives.length).toBeGreaterThan(0);
   });
 
+  it("compares candidate symbols", async () => {
+    const res = await call("compare_sf_symbols", {
+      names: ["trash", "xmark.bin", "minus.circle"],
+    });
+    expect(res.symbols.map((s: { name: string }) => s.name)).toEqual([
+      "trash",
+      "xmark.bin",
+      "minus.circle",
+    ]);
+    expect(res.differences.length).toBe(3);
+  });
+
+  it("finds visually similar symbols", async () => {
+    const res = await call("find_visually_similar_symbols", {
+      name: "bell",
+      limit: 5,
+    });
+    expect(res.results.length).toBe(5);
+    const names = res.results.map((r: { name: string }) => r.name);
+    // Same-family members are excluded by default.
+    expect(names).not.toContain("bell.fill");
+    expect(res.results[0].similarity).toBeGreaterThan(0.5);
+  });
+
+  it("reports local catalog status without rebuilding (dryRun)", async () => {
+    const res = await call("update_local_catalog", { dryRun: true });
+    expect([
+      "dry-run",
+      "up-to-date",
+      "unsupported-platform",
+      "source-not-found",
+    ]).toContain(res.status);
+    expect(res.shippedVersion).toBeDefined();
+  });
+
   it("connects fast enough", () => {
     expect(connectMs).toBeLessThan(3_000); // tsx startup dominates in dev; the bundled build is far faster
   });

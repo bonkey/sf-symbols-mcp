@@ -1,8 +1,13 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
-import type { Alias, ExtractedCatalog } from "@sfsmcp/schema";
+import type { ExtractedCatalog } from "@sfsmcp/schema";
 import { ExtractedCatalogSchema } from "@sfsmcp/schema";
 import { GENERATED_DIR } from "./paths.js";
+
+export {
+  annotatableSymbols,
+  deprecatedNames,
+} from "sf-symbols-mcp/store/build-catalog";
 
 /** Load the most recently extracted catalog from generated-local/extracted/. */
 export async function loadExtractedCatalog(): Promise<ExtractedCatalog> {
@@ -19,27 +24,4 @@ export async function loadExtractedCatalog(): Promise<ExtractedCatalog> {
   return ExtractedCatalogSchema.parse(
     JSON.parse(await readFile(join(dir, latest), "utf8")),
   );
-}
-
-/**
- * Old-but-still-valid names: alias sources (rename/legacy) that are catalog
- * symbols themselves. They resolve to a canonical symbol, so rendering and
- * annotating them would duplicate work.
- */
-export function deprecatedNames(catalog: ExtractedCatalog): Set<string> {
-  const symbolNames = new Set(catalog.symbols.map((s) => s.name));
-  const isRenamed = (a: Alias) => a.kind === "rename" || a.kind === "legacy";
-  return new Set(
-    catalog.aliases
-      .filter((a) => isRenamed(a) && symbolNames.has(a.alias))
-      .map((a) => a.alias),
-  );
-}
-
-/** Base symbols worth rendering/annotating: non-deprecated bases. */
-export function annotatableSymbols(catalog: ExtractedCatalog): string[] {
-  const deprecated = deprecatedNames(catalog);
-  return catalog.symbols
-    .map((s) => s.name)
-    .filter((name) => !deprecated.has(name));
 }
