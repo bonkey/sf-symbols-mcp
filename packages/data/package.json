@@ -17,5 +17,8 @@
     "manifest.json",
     "model",
     "NOTICE"
-  ]
+  ],
+  "scripts": {
+    "prepack": "test -f catalog.db || (echo \"Run pnpm pack-data first\" && exit 1)"
+  }
 }

@@ -16,7 +16,8 @@
     "annotate": "tsx packages/pipeline/src/cli.ts annotate",
     "embed": "tsx packages/pipeline/src/cli.ts embed",
     "build-data": "tsx packages/pipeline/src/cli.ts build-db",
-    "eval": "tsx eval/run-eval.ts"
+    "eval": "tsx eval/run-eval.ts",
+    "pack-data": "tsx packages/pipeline/src/cli.ts pack-data"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",

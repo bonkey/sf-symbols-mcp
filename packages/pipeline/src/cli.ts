@@ -5,6 +5,7 @@
 import { runAnnotate } from "./annotate/run.js";
 import { runBuildDb } from "./build-db.js";
 import { runEmbed } from "./embed.js";
+import { runPackData } from "./pack-data.js";
 import { runExtract } from "./extract.js";
 import { runFeatures } from "./features.js";
 import { runRender } from "./render.js";
@@ -18,6 +19,7 @@ const commands: Record<string, () => Promise<void>> = {
   annotate: runAnnotate,
   embed: runEmbed,
   "build-db": runBuildDb,
+  "pack-data": runPackData,
 };
 
 const run = commands[command ?? ""];

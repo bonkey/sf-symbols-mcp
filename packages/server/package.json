@@ -23,7 +23,8 @@
     "NOTICE"
   ],
   "scripts": {
-    "build": "tsdown src/index.ts --format esm --out-dir dist"
+    "build": "tsdown src/index.ts --format esm --out-dir dist",
+    "prepack": "cp ../../README.md ../../NOTICE . && pnpm build"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",

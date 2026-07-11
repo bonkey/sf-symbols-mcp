@@ -38,3 +38,8 @@ semantic_to_descriptive_name.strings
 # OS noise
 .DS_Store
 *.log
+
+# Publishable data-package artifacts are assembled by `pnpm pack-data`
+packages/data/catalog.db
+packages/data/manifest.json
+packages/data/model/
