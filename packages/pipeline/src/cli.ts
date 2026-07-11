@@ -3,6 +3,7 @@
  * Subcommands are wired in as their milestones land.
  */
 import { runExtract } from "./extract.js";
+import { runFeatures } from "./features.js";
 import { runRender } from "./render.js";
 
 const command = process.argv[2];
@@ -10,6 +11,7 @@ const command = process.argv[2];
 const commands: Record<string, () => Promise<void>> = {
   extract: runExtract,
   render: runRender,
+  features: runFeatures,
 };
 
 const run = commands[command ?? ""];

@@ -100,11 +100,22 @@ export const toAvailability = (
 ): Availability => raw;
 
 /**
+ * Variant suffixes Apple uses but does not list in SymbolVariantScripts.csv:
+ * ISO 639-3 scripts and the pre-flipped right-to-left presentation variants.
+ */
+export const SUPPLEMENTAL_VARIANT_EXTENSIONS = new Map<string, string>([
+  ["mni", "Manipuri"],
+  ["sat", "Santali"],
+  ["rtl", "Right-to-left"],
+]);
+
+/**
  * Parse SymbolVariantScripts.csv ("Script,Extension" header, e.g. "Arabic,ar").
- * Returns the set of name-suffix extensions marking localized script variants.
+ * Returns the set of name-suffix extensions marking localized script variants,
+ * merged with the supplemental extensions above.
  */
 export function parseVariantScriptsCsv(csv: string): Map<string, string> {
-  const map = new Map<string, string>();
+  const map = new Map<string, string>(SUPPLEMENTAL_VARIANT_EXTENSIONS);
   for (const line of csv.split(/\r?\n/).slice(1)) {
     const [script, ext] = line.split(",").map((s) => s.trim());
     if (script && ext) map.set(ext, script);
@@ -118,6 +129,7 @@ export function parseVariantScriptsCsv(csv: string): Map<string, string> {
  * preferred when available.
  */
 export const FALLBACK_SCRIPT_EXTENSIONS = new Map<string, string>([
+  ...SUPPLEMENTAL_VARIANT_EXTENSIONS,
   ["ar", "Arabic"],
   ["bn", "Bangla"],
   ["el", "Greek"],
