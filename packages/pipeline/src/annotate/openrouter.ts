@@ -1,4 +1,5 @@
 import type Anthropic from "@anthropic-ai/sdk";
+import { Agent } from "undici";
 import type { z } from "zod";
 import {
   writeCheckpoint,
@@ -19,6 +20,14 @@ import type { BatchItem } from "./batch.js";
  */
 
 const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
+
+/**
+ * Dedicated connection pool. Node's default fetch dispatcher was observed
+ * funnelling every request through a single keep-alive socket in this
+ * process shape, serializing the whole pool (~45 req/min regardless of
+ * worker count). An explicit Agent restores real parallelism.
+ */
+const dispatcher = new Agent({ connections: 128, pipelining: 1 });
 
 interface OpenAiMessage {
   role: "system" | "user";
@@ -122,7 +131,9 @@ async function callOpenRouter(
         // Hung sockets must fail fast and retry on a fresh connection —
         // observed stalls otherwise cap throughput regardless of pool size.
         signal: AbortSignal.timeout(60_000),
-      });
+        // Non-standard Node extension: route through the dedicated pool.
+        dispatcher,
+      } as unknown as RequestInit);
     } catch (error) {
       lastError =
         error instanceof Error ? `${error.name}: ${error.message}` : "network error";
