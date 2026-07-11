@@ -58,6 +58,8 @@ interface Options {
   consensusModel: string;
   concurrency: number;
   route?: string;
+  /** "i/n": process only names whose stable hash ≡ i (mod n) — disjoint parallel shards. */
+  shard?: [number, number];
 }
 
 function parseOptions(argv: string[]): Options {
@@ -80,6 +82,11 @@ function parseOptions(argv: string[]): Options {
     ),
     ...(argv.find((a) => a.startsWith("--route=")) && {
       route: argv.find((a) => a.startsWith("--route="))?.split("=")[1] as string,
+    }),
+    ...(argv.find((a) => a.startsWith("--shard=")) && {
+      shard: (argv.find((a) => a.startsWith("--shard="))?.split("=")[1] ?? "0/1")
+        .split("/")
+        .map(Number) as [number, number],
     }),
   };
 }
@@ -122,11 +129,20 @@ type Pass1 = z.infer<typeof Pass1LiteralSchema>;
 type Pass2 = z.infer<typeof Pass2SemanticSchema>;
 type Pass3 = z.infer<typeof Pass3ReconcileSchema>;
 
+function shardOf(name: string, n: number): number {
+  const hex = createHash("sha256").update(name).digest("hex").slice(0, 8);
+  return Number.parseInt(hex, 16) % n;
+}
+
 async function targetNames(
   catalog: ExtractedCatalog,
   opts: Options,
 ): Promise<string[]> {
-  const names = annotatableSymbols(catalog);
+  let names = annotatableSymbols(catalog);
+  if (opts.shard) {
+    const [i, n] = opts.shard;
+    names = names.filter((name) => shardOf(name, n) === i);
+  }
   return opts.pilot ? pilotSubset(names, opts.pilot) : names;
 }
 
