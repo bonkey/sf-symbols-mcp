@@ -38,15 +38,25 @@ export type RawLayersetAvailability = z.infer<
   typeof RawLayersetAvailabilitySchema
 >;
 
-export const RawCategoriesSchema = z.array(
-  z
-    .object({
-      key: z.string(),
-      label: z.string(),
-      icon: z.string().optional(),
-    })
-    .strict(),
-);
+// Older CoreGlyphs bundles (pre-SF-Symbols-7 catalogs) omit `label`;
+// fall back to the key so degraded extraction still works.
+export const RawCategoriesSchema = z
+  .array(
+    z
+      .object({
+        key: z.string(),
+        label: z.string().optional(),
+        icon: z.string().optional(),
+      })
+      .strict(),
+  )
+  .transform((categories) =>
+    categories.map((c) => ({
+      key: c.key,
+      label: c.label ?? c.key,
+      ...(c.icon !== undefined && { icon: c.icon }),
+    })),
+  );
 export type RawCategories = z.infer<typeof RawCategoriesSchema>;
 
 /** symbol -> [category keys] */
