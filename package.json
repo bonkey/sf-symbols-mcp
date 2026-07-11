@@ -14,6 +14,7 @@
     "render": "tsx packages/pipeline/src/cli.ts render",
     "features": "tsx packages/pipeline/src/cli.ts features",
     "annotate": "tsx packages/pipeline/src/cli.ts annotate",
+    "embed": "tsx packages/pipeline/src/cli.ts embed",
     "build-data": "tsx packages/pipeline/src/cli.ts build-db",
     "eval": "tsx eval/run-eval.ts"
   },

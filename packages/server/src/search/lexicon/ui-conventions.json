@@ -1,0 +1,791 @@
+{
+  "settings": [
+    { "symbol": "gearshape", "prior": 1.0 },
+    { "symbol": "gear", "prior": 0.7 },
+    { "symbol": "slider.horizontal.3", "prior": 0.5 }
+  ],
+  "share": [
+    { "symbol": "square.and.arrow.up", "prior": 1.0 }
+  ],
+  "delete": [
+    { "symbol": "trash", "prior": 1.0 },
+    { "symbol": "minus.circle", "prior": 0.45 },
+    { "symbol": "xmark.bin", "prior": 0.4 }
+  ],
+  "edit": [
+    { "symbol": "pencil", "prior": 1.0 },
+    { "symbol": "square.and.pencil", "prior": 0.8 }
+  ],
+  "compose": [
+    { "symbol": "square.and.pencil", "prior": 1.0 },
+    { "symbol": "pencil", "prior": 0.5 }
+  ],
+  "search": [
+    { "symbol": "magnifyingglass", "prior": 1.0 }
+  ],
+  "download": [
+    { "symbol": "arrow.down.circle", "prior": 0.9 },
+    { "symbol": "square.and.arrow.down", "prior": 0.8 },
+    { "symbol": "tray.and.arrow.down", "prior": 0.7 },
+    { "symbol": "arrow.down.to.line", "prior": 0.5 },
+    { "symbol": "icloud.and.arrow.down", "prior": 0.5 }
+  ],
+  "upload": [
+    { "symbol": "square.and.arrow.up", "prior": 0.8 },
+    { "symbol": "arrow.up.circle", "prior": 0.7 },
+    { "symbol": "tray.and.arrow.up", "prior": 0.6 },
+    { "symbol": "icloud.and.arrow.up", "prior": 0.5 }
+  ],
+  "add": [
+    { "symbol": "plus", "prior": 1.0 },
+    { "symbol": "plus.circle", "prior": 0.9 },
+    { "symbol": "plus.square", "prior": 0.5 }
+  ],
+  "remove": [
+    { "symbol": "minus", "prior": 0.9 },
+    { "symbol": "minus.circle", "prior": 0.9 },
+    { "symbol": "xmark", "prior": 0.5 }
+  ],
+  "close": [
+    { "symbol": "xmark", "prior": 1.0 },
+    { "symbol": "xmark.circle", "prior": 0.8 }
+  ],
+  "cancel": [
+    { "symbol": "xmark", "prior": 0.9 },
+    { "symbol": "xmark.circle", "prior": 0.8 }
+  ],
+  "confirm": [
+    { "symbol": "checkmark", "prior": 1.0 },
+    { "symbol": "checkmark.circle", "prior": 0.9 }
+  ],
+  "done": [
+    { "symbol": "checkmark", "prior": 1.0 },
+    { "symbol": "checkmark.circle", "prior": 0.8 }
+  ],
+  "archive": [
+    { "symbol": "archivebox", "prior": 1.0 },
+    { "symbol": "tray.and.arrow.down", "prior": 0.4 }
+  ],
+  "refresh": [
+    { "symbol": "arrow.clockwise", "prior": 1.0 },
+    { "symbol": "arrow.trianglehead.2.clockwise.rotate.90", "prior": 0.6 }
+  ],
+  "sync": [
+    { "symbol": "arrow.trianglehead.2.clockwise.rotate.90", "prior": 0.9 },
+    { "symbol": "arrow.clockwise", "prior": 0.6 },
+    { "symbol": "arrow.trianglehead.2.circlepath", "prior": 0.6 }
+  ],
+  "undo": [
+    { "symbol": "arrow.uturn.backward", "prior": 1.0 }
+  ],
+  "redo": [
+    { "symbol": "arrow.uturn.forward", "prior": 1.0 }
+  ],
+  "back": [
+    { "symbol": "chevron.left", "prior": 1.0 },
+    { "symbol": "chevron.backward", "prior": 0.9 },
+    { "symbol": "arrow.left", "prior": 0.6 }
+  ],
+  "forward": [
+    { "symbol": "chevron.right", "prior": 1.0 },
+    { "symbol": "chevron.forward", "prior": 0.9 },
+    { "symbol": "arrow.right", "prior": 0.6 }
+  ],
+  "expand": [
+    { "symbol": "chevron.down", "prior": 0.7 },
+    { "symbol": "arrow.up.left.and.arrow.down.right", "prior": 0.7 },
+    { "symbol": "rectangle.expand.vertical", "prior": 0.4 }
+  ],
+  "collapse": [
+    { "symbol": "chevron.up", "prior": 0.7 },
+    { "symbol": "arrow.down.right.and.arrow.up.left", "prior": 0.7 }
+  ],
+  "fullscreen": [
+    { "symbol": "arrow.up.left.and.arrow.down.right", "prior": 0.9 },
+    { "symbol": "arrow.up.backward.and.arrow.down.forward", "prior": 0.6 }
+  ],
+  "menu": [
+    { "symbol": "line.3.horizontal", "prior": 1.0 },
+    { "symbol": "ellipsis", "prior": 0.5 }
+  ],
+  "more": [
+    { "symbol": "ellipsis", "prior": 1.0 },
+    { "symbol": "ellipsis.circle", "prior": 0.9 }
+  ],
+  "options": [
+    { "symbol": "ellipsis.circle", "prior": 0.8 },
+    { "symbol": "slider.horizontal.3", "prior": 0.7 }
+  ],
+  "filter": [
+    { "symbol": "line.3.horizontal.decrease", "prior": 1.0 },
+    { "symbol": "line.3.horizontal.decrease.circle", "prior": 0.9 },
+    { "symbol": "slider.horizontal.3", "prior": 0.5 }
+  ],
+  "sort": [
+    { "symbol": "arrow.up.arrow.down", "prior": 1.0 },
+    { "symbol": "line.3.horizontal.decrease", "prior": 0.5 }
+  ],
+  "play": [
+    { "symbol": "play", "prior": 0.8 },
+    { "symbol": "play.fill", "prior": 1.0 },
+    { "symbol": "play.circle", "prior": 0.7 }
+  ],
+  "pause": [
+    { "symbol": "pause", "prior": 0.8 },
+    { "symbol": "pause.fill", "prior": 1.0 }
+  ],
+  "stop": [
+    { "symbol": "stop.fill", "prior": 1.0 },
+    { "symbol": "stop", "prior": 0.7 }
+  ],
+  "record": [
+    { "symbol": "record.circle", "prior": 1.0 },
+    { "symbol": "circle.fill", "prior": 0.4 }
+  ],
+  "mute": [
+    { "symbol": "speaker.slash", "prior": 1.0 },
+    { "symbol": "speaker.slash.fill", "prior": 0.9 },
+    { "symbol": "bell.slash", "prior": 0.4 }
+  ],
+  "unmute": [
+    { "symbol": "speaker.wave.2", "prior": 0.9 },
+    { "symbol": "speaker", "prior": 0.6 }
+  ],
+  "volume": [
+    { "symbol": "speaker.wave.2", "prior": 0.9 },
+    { "symbol": "speaker.wave.3", "prior": 0.7 }
+  ],
+  "notifications": [
+    { "symbol": "bell", "prior": 1.0 },
+    { "symbol": "bell.badge", "prior": 0.8 }
+  ],
+  "favorite": [
+    { "symbol": "star", "prior": 0.9 },
+    { "symbol": "heart", "prior": 0.8 },
+    { "symbol": "star.fill", "prior": 0.7 }
+  ],
+  "like": [
+    { "symbol": "heart", "prior": 1.0 },
+    { "symbol": "hand.thumbsup", "prior": 0.8 }
+  ],
+  "dislike": [
+    { "symbol": "hand.thumbsdown", "prior": 1.0 },
+    { "symbol": "heart.slash", "prior": 0.5 }
+  ],
+  "bookmark": [
+    { "symbol": "bookmark", "prior": 1.0 }
+  ],
+  "flag": [
+    { "symbol": "flag", "prior": 1.0 }
+  ],
+  "pin": [
+    { "symbol": "pin", "prior": 1.0 },
+    { "symbol": "mappin", "prior": 0.5 }
+  ],
+  "tag": [
+    { "symbol": "tag", "prior": 1.0 }
+  ],
+  "copy": [
+    { "symbol": "doc.on.doc", "prior": 1.0 },
+    { "symbol": "square.on.square", "prior": 0.6 }
+  ],
+  "paste": [
+    { "symbol": "doc.on.clipboard", "prior": 1.0 },
+    { "symbol": "clipboard", "prior": 0.6 }
+  ],
+  "cut": [
+    { "symbol": "scissors", "prior": 1.0 }
+  ],
+  "duplicate": [
+    { "symbol": "plus.square.on.square", "prior": 0.9 },
+    { "symbol": "doc.on.doc", "prior": 0.7 }
+  ],
+  "link": [
+    { "symbol": "link", "prior": 1.0 }
+  ],
+  "attach": [
+    { "symbol": "paperclip", "prior": 1.0 }
+  ],
+  "send": [
+    { "symbol": "paperplane", "prior": 1.0 },
+    { "symbol": "paperplane.fill", "prior": 0.9 },
+    { "symbol": "arrow.up.circle.fill", "prior": 0.5 }
+  ],
+  "reply": [
+    { "symbol": "arrowshape.turn.up.left", "prior": 1.0 },
+    { "symbol": "arrowshape.turn.up.left.fill", "prior": 0.8 }
+  ],
+  "forward-message": [
+    { "symbol": "arrowshape.turn.up.right", "prior": 1.0 }
+  ],
+  "email": [
+    { "symbol": "envelope", "prior": 1.0 }
+  ],
+  "message": [
+    { "symbol": "message", "prior": 1.0 },
+    { "symbol": "bubble.left", "prior": 0.7 }
+  ],
+  "call": [
+    { "symbol": "phone", "prior": 1.0 },
+    { "symbol": "phone.fill", "prior": 0.9 }
+  ],
+  "video-call": [
+    { "symbol": "video", "prior": 1.0 },
+    { "symbol": "video.fill", "prior": 0.9 }
+  ],
+  "camera": [
+    { "symbol": "camera", "prior": 1.0 }
+  ],
+  "photo": [
+    { "symbol": "photo", "prior": 1.0 },
+    { "symbol": "photo.on.rectangle", "prior": 0.6 }
+  ],
+  "gallery": [
+    { "symbol": "photo.on.rectangle", "prior": 0.9 },
+    { "symbol": "photo.stack", "prior": 0.8 },
+    { "symbol": "square.grid.2x2", "prior": 0.5 }
+  ],
+  "user": [
+    { "symbol": "person", "prior": 1.0 },
+    { "symbol": "person.circle", "prior": 0.9 },
+    { "symbol": "person.crop.circle", "prior": 0.9 }
+  ],
+  "account": [
+    { "symbol": "person.crop.circle", "prior": 1.0 },
+    { "symbol": "person.circle", "prior": 0.8 }
+  ],
+  "profile": [
+    { "symbol": "person.crop.circle", "prior": 1.0 },
+    { "symbol": "person.crop.square", "prior": 0.5 }
+  ],
+  "contacts": [
+    { "symbol": "person.2", "prior": 0.8 },
+    { "symbol": "person.crop.circle.badge.plus", "prior": 0.4 },
+    { "symbol": "book", "prior": 0.3 }
+  ],
+  "group": [
+    { "symbol": "person.2", "prior": 0.9 },
+    { "symbol": "person.3", "prior": 0.9 }
+  ],
+  "add-user": [
+    { "symbol": "person.badge.plus", "prior": 1.0 },
+    { "symbol": "person.crop.circle.badge.plus", "prior": 0.9 }
+  ],
+  "home": [
+    { "symbol": "house", "prior": 1.0 },
+    { "symbol": "house.fill", "prior": 0.9 }
+  ],
+  "calendar": [
+    { "symbol": "calendar", "prior": 1.0 }
+  ],
+  "clock": [
+    { "symbol": "clock", "prior": 1.0 }
+  ],
+  "history": [
+    { "symbol": "clock.arrow.circlepath", "prior": 1.0 },
+    { "symbol": "clock", "prior": 0.5 }
+  ],
+  "timer": [
+    { "symbol": "timer", "prior": 1.0 }
+  ],
+  "alarm": [
+    { "symbol": "alarm", "prior": 1.0 }
+  ],
+  "location": [
+    { "symbol": "location", "prior": 1.0 },
+    { "symbol": "mappin.and.ellipse", "prior": 0.7 }
+  ],
+  "map": [
+    { "symbol": "map", "prior": 1.0 }
+  ],
+  "navigate": [
+    { "symbol": "location.north", "prior": 0.7 },
+    { "symbol": "arrow.triangle.turn.up.right.diamond", "prior": 0.7 },
+    { "symbol": "location", "prior": 0.6 }
+  ],
+  "folder": [
+    { "symbol": "folder", "prior": 1.0 }
+  ],
+  "file": [
+    { "symbol": "doc", "prior": 1.0 },
+    { "symbol": "doc.text", "prior": 0.8 }
+  ],
+  "document": [
+    { "symbol": "doc.text", "prior": 1.0 },
+    { "symbol": "doc", "prior": 0.8 }
+  ],
+  "list": [
+    { "symbol": "list.bullet", "prior": 1.0 },
+    { "symbol": "list.dash", "prior": 0.6 }
+  ],
+  "grid": [
+    { "symbol": "square.grid.2x2", "prior": 1.0 },
+    { "symbol": "square.grid.3x3", "prior": 0.7 }
+  ],
+  "info": [
+    { "symbol": "info.circle", "prior": 1.0 },
+    { "symbol": "info", "prior": 0.5 }
+  ],
+  "help": [
+    { "symbol": "questionmark.circle", "prior": 1.0 },
+    { "symbol": "questionmark", "prior": 0.5 }
+  ],
+  "warning": [
+    { "symbol": "exclamationmark.triangle", "prior": 1.0 },
+    { "symbol": "exclamationmark.circle", "prior": 0.7 }
+  ],
+  "error": [
+    { "symbol": "xmark.octagon", "prior": 0.9 },
+    { "symbol": "exclamationmark.triangle", "prior": 0.7 },
+    { "symbol": "xmark.circle", "prior": 0.6 }
+  ],
+  "success": [
+    { "symbol": "checkmark.circle", "prior": 1.0 },
+    { "symbol": "checkmark.seal", "prior": 0.6 }
+  ],
+  "lock": [
+    { "symbol": "lock", "prior": 1.0 }
+  ],
+  "unlock": [
+    { "symbol": "lock.open", "prior": 1.0 }
+  ],
+  "security": [
+    { "symbol": "lock.shield", "prior": 0.9 },
+    { "symbol": "shield", "prior": 0.8 }
+  ],
+  "privacy": [
+    { "symbol": "hand.raised", "prior": 0.9 },
+    { "symbol": "lock.shield", "prior": 0.7 }
+  ],
+  "hide": [
+    { "symbol": "eye.slash", "prior": 1.0 }
+  ],
+  "show": [
+    { "symbol": "eye", "prior": 1.0 }
+  ],
+  "visibility": [
+    { "symbol": "eye", "prior": 1.0 },
+    { "symbol": "eye.slash", "prior": 0.7 }
+  ],
+  "print": [
+    { "symbol": "printer", "prior": 1.0 }
+  ],
+  "scan": [
+    { "symbol": "doc.viewfinder", "prior": 0.9 },
+    { "symbol": "qrcode.viewfinder", "prior": 0.7 }
+  ],
+  "qr-code": [
+    { "symbol": "qrcode", "prior": 1.0 },
+    { "symbol": "qrcode.viewfinder", "prior": 0.9 }
+  ],
+  "wifi": [
+    { "symbol": "wifi", "prior": 1.0 }
+  ],
+  "bluetooth": [
+    { "symbol": "antenna.radiowaves.left.and.right", "prior": 0.5 }
+  ],
+  "battery": [
+    { "symbol": "battery.100percent", "prior": 0.8 },
+    { "symbol": "battery.50percent", "prior": 0.6 }
+  ],
+  "power": [
+    { "symbol": "power", "prior": 1.0 }
+  ],
+  "brightness": [
+    { "symbol": "sun.max", "prior": 1.0 },
+    { "symbol": "sun.min", "prior": 0.6 }
+  ],
+  "dark-mode": [
+    { "symbol": "moon", "prior": 1.0 },
+    { "symbol": "moon.fill", "prior": 0.8 }
+  ],
+  "cloud": [
+    { "symbol": "cloud", "prior": 1.0 },
+    { "symbol": "icloud", "prior": 0.7 }
+  ],
+  "cart": [
+    { "symbol": "cart", "prior": 1.0 }
+  ],
+  "buy": [
+    { "symbol": "cart", "prior": 0.9 },
+    { "symbol": "cart.badge.plus", "prior": 0.8 },
+    { "symbol": "creditcard", "prior": 0.5 }
+  ],
+  "payment": [
+    { "symbol": "creditcard", "prior": 1.0 }
+  ],
+  "money": [
+    { "symbol": "dollarsign.circle", "prior": 0.9 },
+    { "symbol": "banknote", "prior": 0.6 }
+  ],
+  "gift": [
+    { "symbol": "gift", "prior": 1.0 }
+  ],
+  "shipping": [
+    { "symbol": "shippingbox", "prior": 0.9 },
+    { "symbol": "truck.box", "prior": 0.8 }
+  ],
+  "chart": [
+    { "symbol": "chart.bar", "prior": 1.0 },
+    { "symbol": "chart.line.uptrend.xyaxis", "prior": 0.8 },
+    { "symbol": "chart.pie", "prior": 0.7 }
+  ],
+  "stats": [
+    { "symbol": "chart.bar", "prior": 0.9 },
+    { "symbol": "chart.line.uptrend.xyaxis", "prior": 0.8 }
+  ],
+  "trend-up": [
+    { "symbol": "chart.line.uptrend.xyaxis", "prior": 1.0 },
+    { "symbol": "arrow.up.right", "prior": 0.6 }
+  ],
+  "trend-down": [
+    { "symbol": "chart.line.downtrend.xyaxis", "prior": 1.0 },
+    { "symbol": "arrow.down.right", "prior": 0.6 }
+  ],
+  "microphone": [
+    { "symbol": "mic", "prior": 1.0 },
+    { "symbol": "mic.fill", "prior": 0.9 }
+  ],
+  "music": [
+    { "symbol": "music.note", "prior": 1.0 }
+  ],
+  "headphones": [
+    { "symbol": "headphones", "prior": 1.0 }
+  ],
+  "book": [
+    { "symbol": "book", "prior": 1.0 },
+    { "symbol": "book.closed", "prior": 0.7 }
+  ],
+  "news": [
+    { "symbol": "newspaper", "prior": 1.0 }
+  ],
+  "globe": [
+    { "symbol": "globe", "prior": 1.0 }
+  ],
+  "language": [
+    { "symbol": "globe", "prior": 0.9 },
+    { "symbol": "character.bubble", "prior": 0.6 }
+  ],
+  "translate": [
+    { "symbol": "translate", "prior": 1.0 },
+    { "symbol": "character.bubble", "prior": 0.5 }
+  ],
+  "accessibility": [
+    { "symbol": "accessibility", "prior": 1.0 },
+    { "symbol": "figure.stand", "prior": 0.4 }
+  ],
+  "keyboard": [
+    { "symbol": "keyboard", "prior": 1.0 }
+  ],
+  "text-format": [
+    { "symbol": "textformat", "prior": 1.0 },
+    { "symbol": "bold", "prior": 0.5 }
+  ],
+  "font-size": [
+    { "symbol": "textformat.size", "prior": 1.0 }
+  ],
+  "align": [
+    { "symbol": "text.alignleft", "prior": 0.8 },
+    { "symbol": "text.aligncenter", "prior": 0.7 }
+  ],
+  "signature": [
+    { "symbol": "signature", "prior": 1.0 }
+  ],
+  "crop": [
+    { "symbol": "crop", "prior": 1.0 }
+  ],
+  "rotate": [
+    { "symbol": "rotate.right", "prior": 0.9 },
+    { "symbol": "rotate.left", "prior": 0.8 },
+    { "symbol": "arrow.clockwise", "prior": 0.4 }
+  ],
+  "zoom-in": [
+    { "symbol": "plus.magnifyingglass", "prior": 1.0 }
+  ],
+  "zoom-out": [
+    { "symbol": "minus.magnifyingglass", "prior": 1.0 }
+  ],
+  "wand": [
+    { "symbol": "wand.and.stars", "prior": 0.9 },
+    { "symbol": "wand.and.rays", "prior": 0.7 }
+  ],
+  "ai": [
+    { "symbol": "sparkles", "prior": 0.9 },
+    { "symbol": "wand.and.stars", "prior": 0.7 },
+    { "symbol": "apple.intelligence", "prior": 0.5 }
+  ],
+  "shuffle": [
+    { "symbol": "shuffle", "prior": 1.0 }
+  ],
+  "repeat": [
+    { "symbol": "repeat", "prior": 1.0 },
+    { "symbol": "repeat.1", "prior": 0.6 }
+  ],
+  "airplane": [
+    { "symbol": "airplane", "prior": 1.0 }
+  ],
+  "car": [
+    { "symbol": "car", "prior": 1.0 }
+  ],
+  "walk": [
+    { "symbol": "figure.walk", "prior": 1.0 }
+  ],
+  "run": [
+    { "symbol": "figure.run", "prior": 1.0 }
+  ],
+  "fitness": [
+    { "symbol": "figure.run", "prior": 0.8 },
+    { "symbol": "dumbbell", "prior": 0.8 },
+    { "symbol": "heart", "prior": 0.4 }
+  ],
+  "health": [
+    { "symbol": "heart", "prior": 0.9 },
+    { "symbol": "cross.case", "prior": 0.6 },
+    { "symbol": "heart.text.square", "prior": 0.6 }
+  ],
+  "food": [
+    { "symbol": "fork.knife", "prior": 1.0 }
+  ],
+  "coffee": [
+    { "symbol": "cup.and.saucer", "prior": 1.0 },
+    { "symbol": "mug", "prior": 0.7 }
+  ],
+  "weather": [
+    { "symbol": "cloud.sun", "prior": 0.9 },
+    { "symbol": "sun.max", "prior": 0.6 }
+  ],
+  "rain": [
+    { "symbol": "cloud.rain", "prior": 1.0 }
+  ],
+  "temperature": [
+    { "symbol": "thermometer.medium", "prior": 0.9 }
+  ],
+  "fire": [
+    { "symbol": "flame", "prior": 1.0 }
+  ],
+  "water": [
+    { "symbol": "drop", "prior": 1.0 }
+  ],
+  "leaf": [
+    { "symbol": "leaf", "prior": 1.0 }
+  ],
+  "recycle": [
+    { "symbol": "arrow.trianglehead.2.clockwise.rotate.90", "prior": 0.4 },
+    { "symbol": "arrow.3.trianglepath", "prior": 0.8 }
+  ],
+  "lightbulb": [
+    { "symbol": "lightbulb", "prior": 1.0 }
+  ],
+  "idea": [
+    { "symbol": "lightbulb", "prior": 1.0 }
+  ],
+  "puzzle": [
+    { "symbol": "puzzlepiece", "prior": 1.0 }
+  ],
+  "game": [
+    { "symbol": "gamecontroller", "prior": 1.0 }
+  ],
+  "trophy": [
+    { "symbol": "trophy", "prior": 1.0 }
+  ],
+  "award": [
+    { "symbol": "medal", "prior": 0.8 },
+    { "symbol": "rosette", "prior": 0.7 },
+    { "symbol": "trophy", "prior": 0.7 }
+  ],
+  "crown": [
+    { "symbol": "crown", "prior": 1.0 }
+  ],
+  "premium": [
+    { "symbol": "crown", "prior": 0.8 },
+    { "symbol": "star.circle", "prior": 0.6 },
+    { "symbol": "sparkles", "prior": 0.5 }
+  ],
+  "eject": [
+    { "symbol": "eject", "prior": 1.0 }
+  ],
+  "external-link": [
+    { "symbol": "arrow.up.right.square", "prior": 0.9 },
+    { "symbol": "arrow.up.forward.app", "prior": 0.7 },
+    { "symbol": "safari", "prior": 0.4 }
+  ],
+  "open-in-browser": [
+    { "symbol": "safari", "prior": 0.9 },
+    { "symbol": "globe", "prior": 0.6 }
+  ],
+  "terminal": [
+    { "symbol": "terminal", "prior": 1.0 },
+    { "symbol": "apple.terminal", "prior": 0.7 }
+  ],
+  "code": [
+    { "symbol": "chevron.left.forwardslash.chevron.right", "prior": 1.0 },
+    { "symbol": "curlybraces", "prior": 0.7 }
+  ],
+  "bug": [
+    { "symbol": "ladybug", "prior": 0.9 },
+    { "symbol": "ant", "prior": 0.6 }
+  ],
+  "flask": [
+    { "symbol": "flask", "prior": 1.0 }
+  ],
+  "experiment": [
+    { "symbol": "flask", "prior": 0.9 },
+    { "symbol": "testtube.2", "prior": 0.7 }
+  ],
+  "box": [
+    { "symbol": "shippingbox", "prior": 0.8 },
+    { "symbol": "cube", "prior": 0.7 }
+  ],
+  "layers": [
+    { "symbol": "square.3.layers.3d", "prior": 0.9 },
+    { "symbol": "square.stack", "prior": 0.8 }
+  ],
+  "widgets": [
+    { "symbol": "square.grid.2x2", "prior": 0.7 },
+    { "symbol": "widget.small", "prior": 0.6 }
+  ],
+  "apps": [
+    { "symbol": "square.grid.2x2", "prior": 0.9 },
+    { "symbol": "app", "prior": 0.5 }
+  ],
+  "inbox": [
+    { "symbol": "tray", "prior": 1.0 },
+    { "symbol": "tray.full", "prior": 0.7 }
+  ],
+  "outbox": [
+    { "symbol": "tray.and.arrow.up", "prior": 1.0 }
+  ],
+  "drag": [
+    { "symbol": "line.3.horizontal", "prior": 0.7 },
+    { "symbol": "arrow.up.and.down.and.arrow.left.and.right", "prior": 0.7 }
+  ],
+  "move": [
+    { "symbol": "arrow.up.and.down.and.arrow.left.and.right", "prior": 0.9 },
+    { "symbol": "folder", "prior": 0.4 }
+  ],
+  "swap": [
+    { "symbol": "arrow.left.arrow.right", "prior": 1.0 },
+    { "symbol": "rectangle.2.swap", "prior": 0.7 }
+  ],
+  "split": [
+    { "symbol": "square.split.2x1", "prior": 0.8 },
+    { "symbol": "arrow.triangle.branch", "prior": 0.7 }
+  ],
+  "merge": [
+    { "symbol": "arrow.triangle.merge", "prior": 1.0 }
+  ],
+  "branch": [
+    { "symbol": "arrow.triangle.branch", "prior": 1.0 }
+  ],
+  "connect": [
+    { "symbol": "link", "prior": 0.8 },
+    { "symbol": "personalhotspot", "prior": 0.5 }
+  ],
+  "disconnect": [
+    { "symbol": "link.badge.plus", "prior": 0.3 },
+    { "symbol": "wifi.slash", "prior": 0.6 },
+    { "symbol": "xmark.circle", "prior": 0.4 }
+  ],
+  "logout": [
+    { "symbol": "rectangle.portrait.and.arrow.right", "prior": 1.0 },
+    { "symbol": "arrow.right.square", "prior": 0.6 }
+  ],
+  "login": [
+    { "symbol": "person.crop.circle.badge.checkmark", "prior": 0.6 },
+    { "symbol": "arrow.right.to.line", "prior": 0.5 },
+    { "symbol": "key", "prior": 0.5 }
+  ],
+  "password": [
+    { "symbol": "key", "prior": 0.9 },
+    { "symbol": "lock", "prior": 0.7 },
+    { "symbol": "asterisk", "prior": 0.4 }
+  ],
+  "fingerprint": [
+    { "symbol": "touchid", "prior": 1.0 }
+  ],
+  "face-id": [
+    { "symbol": "faceid", "prior": 1.0 }
+  ],
+  "voice": [
+    { "symbol": "waveform", "prior": 0.9 },
+    { "symbol": "mic", "prior": 0.7 }
+  ],
+  "text-to-speech": [
+    { "symbol": "speaker.wave.2.bubble", "prior": 0.7 },
+    { "symbol": "waveform", "prior": 0.5 }
+  ],
+  "subtitles": [
+    { "symbol": "captions.bubble", "prior": 1.0 }
+  ],
+  "picture-in-picture": [
+    { "symbol": "pip", "prior": 0.9 },
+    { "symbol": "rectangle.inset.bottomright.filled", "prior": 0.6 }
+  ],
+  "airplay": [
+    { "symbol": "airplay.video", "prior": 0.9 },
+    { "symbol": "airplay.audio", "prior": 0.8 }
+  ],
+  "cast": [
+    { "symbol": "airplay.video", "prior": 0.8 },
+    { "symbol": "tv", "prior": 0.5 }
+  ],
+  "screenshot": [
+    { "symbol": "camera.viewfinder", "prior": 0.8 },
+    { "symbol": "rectangle.dashed.badge.record", "prior": 0.5 }
+  ],
+  "screen-recording": [
+    { "symbol": "record.circle", "prior": 0.7 },
+    { "symbol": "rectangle.dashed.badge.record", "prior": 0.8 }
+  ],
+  "sleep": [
+    { "symbol": "moon.zzz", "prior": 0.9 },
+    { "symbol": "zzz", "prior": 0.7 },
+    { "symbol": "bed.double", "prior": 0.6 }
+  ],
+  "do-not-disturb": [
+    { "symbol": "moon", "prior": 0.9 },
+    { "symbol": "minus.circle", "prior": 0.4 }
+  ],
+  "focus": [
+    { "symbol": "moon", "prior": 0.7 },
+    { "symbol": "target", "prior": 0.6 }
+  ],
+  "target": [
+    { "symbol": "target", "prior": 1.0 },
+    { "symbol": "scope", "prior": 0.6 }
+  ],
+  "rocket": [
+    { "symbol": "paperplane", "prior": 0.4 }
+  ],
+  "launch": [
+    { "symbol": "paperplane", "prior": 0.6 },
+    { "symbol": "arrow.up.forward.app", "prior": 0.6 }
+  ],
+  "verified": [
+    { "symbol": "checkmark.seal", "prior": 1.0 },
+    { "symbol": "checkmark.seal.fill", "prior": 0.9 },
+    { "symbol": "checkmark.shield", "prior": 0.6 }
+  ],
+  "new": [
+    { "symbol": "sparkles", "prior": 0.7 },
+    { "symbol": "plus.circle", "prior": 0.5 },
+    { "symbol": "burst", "prior": 0.4 }
+  ],
+  "trash-restore": [
+    { "symbol": "arrow.uturn.backward.circle", "prior": 0.6 },
+    { "symbol": "trash.slash", "prior": 0.6 }
+  ],
+  "shield-check": [
+    { "symbol": "checkmark.shield", "prior": 1.0 }
+  ],
+  "dashboard": [
+    { "symbol": "gauge.with.needle", "prior": 0.8 },
+    { "symbol": "speedometer", "prior": 0.7 },
+    { "symbol": "square.grid.2x2", "prior": 0.5 }
+  ],
+  "speed": [
+    { "symbol": "speedometer", "prior": 0.9 },
+    { "symbol": "gauge.with.needle", "prior": 0.8 },
+    { "symbol": "hare", "prior": 0.5 }
+  ]
+}

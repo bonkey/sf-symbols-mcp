@@ -4,6 +4,7 @@
  */
 import { runAnnotate } from "./annotate/run.js";
 import { runBuildDb } from "./build-db.js";
+import { runEmbed } from "./embed.js";
 import { runExtract } from "./extract.js";
 import { runFeatures } from "./features.js";
 import { runRender } from "./render.js";
@@ -15,6 +16,7 @@ const commands: Record<string, () => Promise<void>> = {
   render: runRender,
   features: runFeatures,
   annotate: runAnnotate,
+  embed: runEmbed,
   "build-db": runBuildDb,
 };
 
