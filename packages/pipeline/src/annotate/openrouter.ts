@@ -34,6 +34,7 @@ interface OpenAiMessage {
 export function toOpenRouterBody(
   params: Anthropic.Messages.MessageCreateParamsNonStreaming,
   model: string,
+  routeOnly?: string,
 ): Record<string, unknown> {
   const messages: OpenAiMessage[] = [];
   if (typeof params.system === "string") {
@@ -68,6 +69,11 @@ export function toOpenRouterBody(
     model,
     messages,
     max_tokens: params.max_tokens,
+    // Pin the upstream provider (e.g. "google-vertex") to bypass a BYOK
+    // integration whose upstream key is rate-limited.
+    ...(routeOnly && {
+      provider: { only: [routeOnly], allow_fallbacks: false },
+    }),
     ...(format?.type === "json_schema" && {
       response_format: {
         type: "json_schema",
@@ -152,6 +158,7 @@ export async function runOpenRouterPass<T>(opts: {
   items: BatchItem[];
   schema: z.ZodType<T>;
   concurrency?: number;
+  routeOnly?: string | undefined;
   log?: (message: string) => void;
 }): Promise<{ succeeded: number; failed: { key: string; reason: string }[] }> {
   const log = opts.log ?? console.log;
@@ -172,7 +179,7 @@ export async function runOpenRouterPass<T>(opts: {
       const item = opts.items[index];
       if (!item) return;
       try {
-        const body = toOpenRouterBody(item.params, opts.model);
+        const body = toOpenRouterBody(item.params, opts.model, opts.routeOnly);
         const text = await callOpenRouter(apiKey, body);
         const value = opts.schema.parse(JSON.parse(extractJson(text)));
         const checkpoint: Checkpoint<T> = {
