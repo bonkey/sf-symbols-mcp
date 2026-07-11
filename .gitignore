@@ -43,3 +43,6 @@ semantic_to_descriptive_name.strings
 packages/data/catalog.db
 packages/data/manifest.json
 packages/data/model/
+
+# Local secrets (never committed)
+.env
