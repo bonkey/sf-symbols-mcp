@@ -1,0 +1,1286 @@
+{
+  "description": "Golden queries for ranking regression. Answers are at FAMILY granularity (base names). `best` scores 3, `acceptable` 1, `forbidden` -2 in nDCG.",
+  "queries": [
+    {
+      "id": "files-download-01",
+      "domain": "files",
+      "query": "button to download a file to the device",
+      "decomposed": {
+        "primaryAction": "download",
+        "object": "file",
+        "uiContext": "button"
+      },
+      "best": "arrow.down.circle",
+      "acceptable": [
+        "square.and.arrow.down",
+        "tray.and.arrow.down",
+        "arrow.down.doc",
+        "arrow.down",
+        "arrow.down.to.line"
+      ],
+      "forbidden": [
+        "square.and.arrow.up"
+      ]
+    },
+    {
+      "id": "files-download-02",
+      "domain": "files",
+      "query": "download the invoice",
+      "decomposed": {
+        "primaryAction": "download",
+        "object": "invoice"
+      },
+      "best": "arrow.down.doc",
+      "acceptable": [
+        "arrow.down.circle",
+        "square.and.arrow.down",
+        "tray.and.arrow.down",
+        "doc.badge.arrow.up"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "files-upload-01",
+      "domain": "files",
+      "query": "upload a document to the cloud",
+      "decomposed": {
+        "primaryAction": "upload",
+        "object": "document",
+        "destination": "cloud"
+      },
+      "best": "icloud.and.arrow.up",
+      "acceptable": [
+        "square.and.arrow.up",
+        "arrow.up.doc",
+        "tray.and.arrow.up",
+        "arrow.up.circle",
+        "cloud"
+      ],
+      "forbidden": [
+        "icloud.and.arrow.down"
+      ]
+    },
+    {
+      "id": "files-folder-01",
+      "domain": "files",
+      "query": "create a new folder",
+      "decomposed": {
+        "primaryAction": "add",
+        "object": "folder"
+      },
+      "best": "folder.badge.plus",
+      "acceptable": [
+        "folder",
+        "plus"
+      ],
+      "forbidden": [
+        "folder.badge.minus"
+      ]
+    },
+    {
+      "id": "files-archive-01",
+      "domain": "files",
+      "query": "archive this message",
+      "decomposed": {
+        "primaryAction": "archive",
+        "object": "message"
+      },
+      "best": "archivebox",
+      "acceptable": [
+        "tray.and.arrow.down",
+        "shippingbox"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "files-trash-01",
+      "domain": "files",
+      "query": "delete selected items permanently",
+      "decomposed": {
+        "primaryAction": "delete"
+      },
+      "best": "trash",
+      "acceptable": [
+        "xmark.bin",
+        "minus.circle"
+      ],
+      "forbidden": [
+        "plus"
+      ]
+    },
+    {
+      "id": "files-copy-01",
+      "domain": "files",
+      "query": "copy this file",
+      "decomposed": {
+        "primaryAction": "copy",
+        "object": "file"
+      },
+      "best": "doc.on.doc",
+      "acceptable": [
+        "square.on.square",
+        "plus.square.on.square"
+      ],
+      "forbidden": [
+        "scissors"
+      ]
+    },
+    {
+      "id": "nav-back-01",
+      "domain": "navigation",
+      "query": "go back to the previous screen",
+      "decomposed": {
+        "primaryAction": "back",
+        "direction": "left"
+      },
+      "best": "chevron.left",
+      "acceptable": [
+        "chevron.backward",
+        "arrow.left",
+        "arrow.backward",
+        "arrow.uturn.backward"
+      ],
+      "forbidden": [
+        "chevron.right"
+      ]
+    },
+    {
+      "id": "nav-home-01",
+      "domain": "navigation",
+      "query": "navigate to home screen",
+      "decomposed": {
+        "object": "home"
+      },
+      "best": "house",
+      "acceptable": [],
+      "forbidden": []
+    },
+    {
+      "id": "nav-menu-01",
+      "domain": "navigation",
+      "query": "hamburger menu to open navigation drawer",
+      "decomposed": {},
+      "best": "line.3.horizontal",
+      "acceptable": [
+        "sidebar.left",
+        "ellipsis"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "nav-close-01",
+      "domain": "navigation",
+      "query": "close this dialog",
+      "decomposed": {
+        "primaryAction": "close",
+        "uiContext": "button"
+      },
+      "best": "xmark",
+      "acceptable": [
+        "xmark.circle"
+      ],
+      "forbidden": [
+        "checkmark"
+      ]
+    },
+    {
+      "id": "nav-expand-01",
+      "domain": "navigation",
+      "query": "enter full screen mode",
+      "decomposed": {
+        "primaryAction": "expand"
+      },
+      "best": "arrow.up.left.and.arrow.down.right",
+      "acceptable": [
+        "arrow.up.backward.and.arrow.down.forward",
+        "rectangle.expand.diagonal"
+      ],
+      "forbidden": [
+        "arrow.down.right.and.arrow.up.left"
+      ]
+    },
+    {
+      "id": "nav-external-01",
+      "domain": "navigation",
+      "query": "open link in external browser",
+      "decomposed": {
+        "primaryAction": "open",
+        "object": "website"
+      },
+      "best": "arrow.up.right.square",
+      "acceptable": [
+        "safari",
+        "globe",
+        "link",
+        "arrow.up.forward.app"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "media-play-01",
+      "domain": "media",
+      "query": "play the video",
+      "decomposed": {
+        "primaryAction": "play",
+        "object": "video"
+      },
+      "best": "play",
+      "acceptable": [
+        "play.circle",
+        "play.rectangle",
+        "video"
+      ],
+      "forbidden": [
+        "pause",
+        "stop"
+      ]
+    },
+    {
+      "id": "media-pause-01",
+      "domain": "media",
+      "query": "pause playback",
+      "decomposed": {
+        "primaryAction": "pause"
+      },
+      "best": "pause",
+      "acceptable": [
+        "pause.circle"
+      ],
+      "forbidden": [
+        "play"
+      ]
+    },
+    {
+      "id": "media-next-01",
+      "domain": "media",
+      "query": "skip to next track",
+      "decomposed": {
+        "direction": "forward"
+      },
+      "best": "forward.end",
+      "acceptable": [
+        "forward",
+        "forward.end.alt",
+        "chevron.right"
+      ],
+      "forbidden": [
+        "backward.end"
+      ]
+    },
+    {
+      "id": "media-mute-01",
+      "domain": "media",
+      "query": "mute the sound",
+      "decomposed": {
+        "primaryAction": "mute",
+        "state": "muted"
+      },
+      "best": "speaker.slash",
+      "acceptable": [
+        "speaker.slash.circle",
+        "speaker.wave.2.slash"
+      ],
+      "forbidden": [
+        "speaker.wave.2",
+        "speaker.wave.3"
+      ]
+    },
+    {
+      "id": "media-volume-01",
+      "domain": "media",
+      "query": "adjust the volume level",
+      "decomposed": {
+        "object": "audio"
+      },
+      "best": "speaker.wave.2",
+      "acceptable": [
+        "speaker.wave.3",
+        "slider.horizontal.3",
+        "speaker"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "media-shuffle-01",
+      "domain": "media",
+      "query": "shuffle songs randomly",
+      "decomposed": {
+        "primaryAction": "shuffle"
+      },
+      "best": "shuffle",
+      "acceptable": [],
+      "forbidden": [
+        "repeat"
+      ]
+    },
+    {
+      "id": "media-camera-01",
+      "domain": "media",
+      "query": "take a photo",
+      "decomposed": {
+        "primaryAction": "photograph",
+        "object": "picture"
+      },
+      "best": "camera",
+      "acceptable": [
+        "camera.circle",
+        "photo.badge.plus"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "media-record-01",
+      "domain": "media",
+      "query": "start recording audio",
+      "decomposed": {
+        "primaryAction": "record",
+        "object": "audio"
+      },
+      "best": "record.circle",
+      "acceptable": [
+        "mic",
+        "mic.circle",
+        "waveform"
+      ],
+      "forbidden": [
+        "stop"
+      ]
+    },
+    {
+      "id": "comm-send-01",
+      "domain": "communication",
+      "query": "send the message",
+      "decomposed": {
+        "primaryAction": "send",
+        "object": "message"
+      },
+      "best": "paperplane",
+      "acceptable": [
+        "arrow.up.circle",
+        "paperplane.circle"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "comm-reply-01",
+      "domain": "communication",
+      "query": "reply to this email",
+      "decomposed": {
+        "primaryAction": "reply",
+        "object": "email"
+      },
+      "best": "arrowshape.turn.up.left",
+      "acceptable": [
+        "arrowshape.turn.up.left.2",
+        "envelope"
+      ],
+      "forbidden": [
+        "arrowshape.turn.up.right"
+      ]
+    },
+    {
+      "id": "comm-forward-01",
+      "domain": "communication",
+      "query": "forward this message to someone else",
+      "decomposed": {
+        "primaryAction": "forward",
+        "object": "message"
+      },
+      "best": "arrowshape.turn.up.right",
+      "acceptable": [
+        "arrowshape.turn.up.forward",
+        "paperplane"
+      ],
+      "forbidden": [
+        "arrowshape.turn.up.left"
+      ]
+    },
+    {
+      "id": "comm-call-01",
+      "domain": "communication",
+      "query": "start a phone call",
+      "decomposed": {
+        "primaryAction": "call",
+        "object": "phone"
+      },
+      "best": "phone",
+      "acceptable": [
+        "phone.circle",
+        "phone.arrow.up.right"
+      ],
+      "forbidden": [
+        "phone.down"
+      ]
+    },
+    {
+      "id": "comm-video-01",
+      "domain": "communication",
+      "query": "start a video call",
+      "decomposed": {
+        "primaryAction": "call",
+        "object": "video"
+      },
+      "best": "video",
+      "acceptable": [
+        "video.circle",
+        "video.badge.plus"
+      ],
+      "forbidden": [
+        "video.slash"
+      ]
+    },
+    {
+      "id": "comm-chat-01",
+      "domain": "communication",
+      "query": "open the chat conversation",
+      "decomposed": {
+        "primaryAction": "chat",
+        "object": "message"
+      },
+      "best": "message",
+      "acceptable": [
+        "bubble.left",
+        "bubble.left.and.bubble.right",
+        "ellipsis.message"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "comm-email-01",
+      "domain": "communication",
+      "query": "compose a new email",
+      "decomposed": {
+        "primaryAction": "compose",
+        "object": "email"
+      },
+      "best": "square.and.pencil",
+      "acceptable": [
+        "envelope",
+        "envelope.badge",
+        "pencil"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "comm-notify-01",
+      "domain": "communication",
+      "query": "show notifications",
+      "decomposed": {
+        "object": "notification"
+      },
+      "best": "bell",
+      "acceptable": [
+        "bell.badge",
+        "app.badge"
+      ],
+      "forbidden": [
+        "bell.slash"
+      ]
+    },
+    {
+      "id": "comm-silence-01",
+      "domain": "communication",
+      "query": "turn off notifications for this thread",
+      "decomposed": {
+        "primaryAction": "mute",
+        "object": "notification",
+        "state": "off"
+      },
+      "best": "bell.slash",
+      "acceptable": [
+        "bell.badge.slash",
+        "moon",
+        "speaker.slash"
+      ],
+      "forbidden": [
+        "bell.badge"
+      ]
+    },
+    {
+      "id": "settings-01",
+      "domain": "settings",
+      "query": "show account settings",
+      "decomposed": {
+        "primaryAction": "settings",
+        "object": "account"
+      },
+      "best": "gearshape",
+      "acceptable": [
+        "person.crop.circle",
+        "gear",
+        "slider.horizontal.3",
+        "person.crop.circle.badge.gearshape"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "settings-02",
+      "domain": "settings",
+      "query": "app preferences and configuration",
+      "decomposed": {
+        "primaryAction": "settings"
+      },
+      "best": "gearshape",
+      "acceptable": [
+        "gear",
+        "slider.horizontal.3",
+        "gearshape.2"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "settings-profile-01",
+      "domain": "settings",
+      "query": "view user profile",
+      "decomposed": {
+        "object": "user"
+      },
+      "best": "person.crop.circle",
+      "acceptable": [
+        "person",
+        "person.circle"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "settings-privacy-01",
+      "domain": "settings",
+      "query": "privacy settings",
+      "decomposed": {
+        "object": "privacy"
+      },
+      "best": "hand.raised",
+      "acceptable": [
+        "lock.shield",
+        "lock",
+        "shield"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "settings-password-01",
+      "domain": "settings",
+      "query": "change your password",
+      "decomposed": {
+        "primaryAction": "edit",
+        "object": "password"
+      },
+      "best": "key",
+      "acceptable": [
+        "lock",
+        "lock.rotation",
+        "person.badge.key"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "settings-logout-01",
+      "domain": "settings",
+      "query": "sign out of the app",
+      "decomposed": {
+        "primaryAction": "logout"
+      },
+      "best": "rectangle.portrait.and.arrow.right",
+      "acceptable": [
+        "arrow.right.square",
+        "power",
+        "door.left.hand.open"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "settings-darkmode-01",
+      "domain": "settings",
+      "query": "toggle dark mode",
+      "decomposed": {
+        "object": "moon"
+      },
+      "best": "moon",
+      "acceptable": [
+        "moon.fill",
+        "circle.lefthalf.filled",
+        "sun.max"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "edit-undo-01",
+      "domain": "editing",
+      "query": "undo the last change",
+      "decomposed": {
+        "primaryAction": "undo"
+      },
+      "best": "arrow.uturn.backward",
+      "acceptable": [
+        "arrow.uturn.left",
+        "arrow.counterclockwise"
+      ],
+      "forbidden": [
+        "arrow.uturn.forward"
+      ]
+    },
+    {
+      "id": "edit-pencil-01",
+      "domain": "editing",
+      "query": "edit this item",
+      "decomposed": {
+        "primaryAction": "edit"
+      },
+      "best": "pencil",
+      "acceptable": [
+        "square.and.pencil",
+        "pencil.line",
+        "pencil.circle"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "edit-crop-01",
+      "domain": "editing",
+      "query": "crop the image",
+      "decomposed": {
+        "primaryAction": "crop",
+        "object": "image"
+      },
+      "best": "crop",
+      "acceptable": [
+        "crop.rotate",
+        "photo"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "edit-textstyle-01",
+      "domain": "editing",
+      "query": "change text formatting",
+      "decomposed": {
+        "primaryAction": "edit",
+        "object": "text"
+      },
+      "best": "textformat",
+      "acceptable": [
+        "textformat.size",
+        "bold",
+        "character",
+        "textformat.characters"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "edit-attach-01",
+      "domain": "editing",
+      "query": "attach a file",
+      "decomposed": {
+        "primaryAction": "attach",
+        "object": "file"
+      },
+      "best": "paperclip",
+      "acceptable": [
+        "paperclip.circle",
+        "doc.badge.plus",
+        "plus"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "edit-link-01",
+      "domain": "editing",
+      "query": "insert a hyperlink",
+      "decomposed": {
+        "primaryAction": "link"
+      },
+      "best": "link",
+      "acceptable": [
+        "link.badge.plus",
+        "link.circle"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "search-01",
+      "domain": "search",
+      "query": "search for items",
+      "decomposed": {
+        "primaryAction": "search"
+      },
+      "best": "magnifyingglass",
+      "acceptable": [
+        "magnifyingglass.circle",
+        "text.magnifyingglass"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "search-filter-01",
+      "domain": "search",
+      "query": "filter the results list",
+      "decomposed": {
+        "primaryAction": "filter",
+        "object": "list"
+      },
+      "best": "line.3.horizontal.decrease",
+      "acceptable": [
+        "line.3.horizontal.decrease.circle",
+        "slider.horizontal.3",
+        "camera.filters"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "search-sort-01",
+      "domain": "search",
+      "query": "sort ascending or descending",
+      "decomposed": {
+        "primaryAction": "sort"
+      },
+      "best": "arrow.up.arrow.down",
+      "acceptable": [
+        "arrow.up.arrow.down.circle",
+        "line.3.horizontal.decrease"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "commerce-cart-01",
+      "domain": "commerce",
+      "query": "add item to shopping cart",
+      "decomposed": {
+        "primaryAction": "add",
+        "object": "cart"
+      },
+      "best": "cart.badge.plus",
+      "acceptable": [
+        "cart",
+        "plus",
+        "bag.badge.plus"
+      ],
+      "forbidden": [
+        "cart.badge.minus"
+      ]
+    },
+    {
+      "id": "commerce-pay-01",
+      "domain": "commerce",
+      "query": "pay with credit card",
+      "decomposed": {
+        "primaryAction": "pay",
+        "object": "card"
+      },
+      "best": "creditcard",
+      "acceptable": [
+        "creditcard.circle",
+        "dollarsign.circle",
+        "wallet.bifold"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "commerce-gift-01",
+      "domain": "commerce",
+      "query": "redeem a gift card",
+      "decomposed": {
+        "object": "gift"
+      },
+      "best": "gift",
+      "acceptable": [
+        "giftcard",
+        "gift.circle"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "commerce-shipping-01",
+      "domain": "commerce",
+      "query": "track my package delivery",
+      "decomposed": {
+        "object": "package"
+      },
+      "best": "shippingbox",
+      "acceptable": [
+        "truck.box",
+        "box.truck",
+        "location"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "commerce-discount-01",
+      "domain": "commerce",
+      "query": "apply discount code",
+      "decomposed": {
+        "object": "discount"
+      },
+      "best": "percent",
+      "acceptable": [
+        "tag",
+        "ticket"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "state-success-01",
+      "domain": "states",
+      "query": "operation completed successfully",
+      "decomposed": {
+        "state": "default"
+      },
+      "best": "checkmark.circle",
+      "acceptable": [
+        "checkmark",
+        "checkmark.seal"
+      ],
+      "forbidden": [
+        "xmark.circle"
+      ]
+    },
+    {
+      "id": "state-error-01",
+      "domain": "states",
+      "query": "show an error occurred",
+      "decomposed": {
+        "state": "error"
+      },
+      "best": "exclamationmark.triangle",
+      "acceptable": [
+        "xmark.octagon",
+        "xmark.circle",
+        "exclamationmark.circle"
+      ],
+      "forbidden": [
+        "checkmark.circle"
+      ]
+    },
+    {
+      "id": "state-warning-01",
+      "domain": "states",
+      "query": "warning about a risky action",
+      "decomposed": {
+        "state": "warning"
+      },
+      "best": "exclamationmark.triangle",
+      "acceptable": [
+        "exclamationmark.circle",
+        "exclamationmark.octagon"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "state-loading-01",
+      "domain": "states",
+      "query": "content is loading, please wait",
+      "decomposed": {
+        "state": "in-progress"
+      },
+      "best": "hourglass",
+      "acceptable": [
+        "arrow.clockwise",
+        "clock",
+        "ellipsis",
+        "progress.indicator"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "state-locked-01",
+      "domain": "states",
+      "query": "this content is locked",
+      "decomposed": {
+        "state": "locked"
+      },
+      "best": "lock",
+      "acceptable": [
+        "lock.circle",
+        "lock.fill",
+        "lock.shield"
+      ],
+      "forbidden": [
+        "lock.open"
+      ]
+    },
+    {
+      "id": "state-hidden-01",
+      "domain": "states",
+      "query": "content hidden from view",
+      "decomposed": {
+        "primaryAction": "hide",
+        "state": "off"
+      },
+      "best": "eye.slash",
+      "acceptable": [
+        "eye.slash.circle"
+      ],
+      "forbidden": [
+        "eye"
+      ]
+    },
+    {
+      "id": "state-verified-01",
+      "domain": "states",
+      "query": "verified account badge",
+      "decomposed": {
+        "primaryAction": "verify",
+        "object": "account"
+      },
+      "best": "checkmark.seal",
+      "acceptable": [
+        "checkmark.shield",
+        "person.crop.circle.badge.checkmark"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "state-offline-01",
+      "domain": "states",
+      "query": "no internet connection",
+      "decomposed": {
+        "object": "network",
+        "state": "off"
+      },
+      "best": "wifi.slash",
+      "acceptable": [
+        "wifi.exclamationmark",
+        "antenna.radiowaves.left.and.right.slash",
+        "network.slash"
+      ],
+      "forbidden": [
+        "wifi"
+      ]
+    },
+    {
+      "id": "sharing-share-01",
+      "domain": "sharing",
+      "query": "share this with another app",
+      "decomposed": {
+        "primaryAction": "share"
+      },
+      "best": "square.and.arrow.up",
+      "acceptable": [
+        "square.and.arrow.up.circle"
+      ],
+      "forbidden": [
+        "square.and.arrow.down"
+      ]
+    },
+    {
+      "id": "sharing-like-01",
+      "domain": "sharing",
+      "query": "like this post",
+      "decomposed": {
+        "primaryAction": "like"
+      },
+      "best": "heart",
+      "acceptable": [
+        "hand.thumbsup",
+        "star"
+      ],
+      "forbidden": [
+        "hand.thumbsdown",
+        "heart.slash"
+      ]
+    },
+    {
+      "id": "sharing-favorite-01",
+      "domain": "sharing",
+      "query": "mark as favorite",
+      "decomposed": {
+        "primaryAction": "favorite"
+      },
+      "best": "star",
+      "acceptable": [
+        "heart",
+        "star.circle",
+        "bookmark"
+      ],
+      "forbidden": [
+        "star.slash"
+      ]
+    },
+    {
+      "id": "sharing-bookmark-01",
+      "domain": "sharing",
+      "query": "save for reading later",
+      "decomposed": {
+        "primaryAction": "bookmark"
+      },
+      "best": "bookmark",
+      "acceptable": [
+        "book",
+        "star",
+        "square.and.arrow.down"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "sharing-pin-01",
+      "domain": "sharing",
+      "query": "pin this conversation to the top",
+      "decomposed": {
+        "primaryAction": "pin"
+      },
+      "best": "pin",
+      "acceptable": [
+        "pin.circle"
+      ],
+      "forbidden": [
+        "pin.slash"
+      ]
+    },
+    {
+      "id": "misc-calendar-01",
+      "domain": "misc",
+      "query": "schedule an appointment",
+      "decomposed": {
+        "primaryAction": "schedule",
+        "object": "event"
+      },
+      "best": "calendar",
+      "acceptable": [
+        "calendar.badge.plus",
+        "calendar.badge.clock",
+        "clock"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "misc-location-01",
+      "domain": "misc",
+      "query": "show my current location on the map",
+      "decomposed": {
+        "object": "location"
+      },
+      "best": "location",
+      "acceptable": [
+        "mappin.and.ellipse",
+        "map",
+        "mappin",
+        "location.circle"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "misc-history-01",
+      "domain": "misc",
+      "query": "view browsing history",
+      "decomposed": {
+        "object": "clock"
+      },
+      "best": "clock.arrow.circlepath",
+      "acceptable": [
+        "clock",
+        "clock.arrow.trianglehead.counterclockwise.rotate.90",
+        "list.bullet"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "misc-refresh-01",
+      "domain": "misc",
+      "query": "pull to refresh the feed",
+      "decomposed": {
+        "primaryAction": "refresh"
+      },
+      "best": "arrow.clockwise",
+      "acceptable": [
+        "arrow.clockwise.circle",
+        "arrow.trianglehead.2.clockwise.rotate.90",
+        "arrow.trianglehead.2.clockwise"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "misc-info-01",
+      "domain": "misc",
+      "query": "more information about this item",
+      "decomposed": {},
+      "best": "info.circle",
+      "acceptable": [
+        "questionmark.circle",
+        "info"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "misc-help-01",
+      "domain": "misc",
+      "query": "get help and support",
+      "decomposed": {
+        "primaryAction": "help"
+      },
+      "best": "questionmark.circle",
+      "acceptable": [
+        "lifepreserver",
+        "questionmark.bubble",
+        "info.circle"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "misc-scan-01",
+      "domain": "misc",
+      "query": "scan a QR code",
+      "decomposed": {
+        "primaryAction": "scan",
+        "object": "qr"
+      },
+      "best": "qrcode.viewfinder",
+      "acceptable": [
+        "qrcode",
+        "camera.viewfinder",
+        "doc.viewfinder"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "misc-fingerprint-01",
+      "domain": "misc",
+      "query": "unlock with fingerprint",
+      "decomposed": {
+        "primaryAction": "unlock",
+        "object": "fingerprint"
+      },
+      "best": "touchid",
+      "acceptable": [
+        "lock.open",
+        "faceid"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "misc-print-01",
+      "domain": "misc",
+      "query": "print this page",
+      "decomposed": {
+        "primaryAction": "print"
+      },
+      "best": "printer",
+      "acceptable": [
+        "printer.filled.and.paper",
+        "doc"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "misc-chart-01",
+      "domain": "misc",
+      "query": "view sales statistics dashboard",
+      "decomposed": {
+        "object": "statistics"
+      },
+      "best": "chart.bar",
+      "acceptable": [
+        "chart.line.uptrend.xyaxis",
+        "chart.pie",
+        "chart.bar.xaxis",
+        "gauge.with.needle"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "misc-timer-01",
+      "domain": "misc",
+      "query": "set a countdown timer",
+      "decomposed": {
+        "object": "timer"
+      },
+      "best": "timer",
+      "acceptable": [
+        "stopwatch",
+        "hourglass",
+        "clock",
+        "alarm"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "misc-airplane-01",
+      "domain": "misc",
+      "query": "enable airplane mode",
+      "decomposed": {
+        "object": "airplane"
+      },
+      "best": "airplane",
+      "acceptable": [
+        "airplane.circle"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "misc-battery-01",
+      "domain": "misc",
+      "query": "battery level indicator",
+      "decomposed": {
+        "object": "battery"
+      },
+      "best": "battery.100percent",
+      "acceptable": [
+        "battery.75percent",
+        "battery.50percent",
+        "battery.25percent",
+        "minus.plus.batteryblock"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "misc-weather-01",
+      "domain": "misc",
+      "query": "current weather conditions",
+      "decomposed": {
+        "object": "weather"
+      },
+      "best": "cloud.sun",
+      "acceptable": [
+        "sun.max",
+        "cloud",
+        "cloud.sun.rain",
+        "thermometer.medium"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "misc-accessibility-01",
+      "domain": "misc",
+      "query": "accessibility options",
+      "decomposed": {
+        "object": "accessibility"
+      },
+      "best": "accessibility",
+      "acceptable": [
+        "figure.stand",
+        "person.crop.circle",
+        "gearshape"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "misc-translate-01",
+      "domain": "misc",
+      "query": "translate this text to another language",
+      "decomposed": {
+        "primaryAction": "translate",
+        "object": "text"
+      },
+      "best": "translate",
+      "acceptable": [
+        "character.bubble",
+        "globe",
+        "textformat"
+      ],
+      "forbidden": []
+    },
+    {
+      "id": "misc-sleep-01",
+      "domain": "misc",
+      "query": "enable do not disturb",
+      "decomposed": {
+        "state": "off"
+      },
+      "best": "moon",
+      "acceptable": [
+        "moon.fill",
+        "bell.slash",
+        "moon.zzz"
+      ],
+      "forbidden": []
+    }
+  ]
+}

@@ -116,6 +116,10 @@ export const searchInputShape = {
     .boolean()
     .optional()
     .describe("Attach each family's variant list (default true)."),
+  explain: z
+    .boolean()
+    .optional()
+    .describe("Include the per-result score breakdown (default false)."),
 } as const;
 
 export const SearchInputSchema = z.object(searchInputShape);

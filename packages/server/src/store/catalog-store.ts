@@ -182,4 +182,77 @@ export class CatalogStore {
       .get() as { n: number };
     return row.n;
   }
+
+  annotatedCount(): number {
+    const row = this.db
+      .prepare("SELECT count(*) AS n FROM symbols WHERE unannotated = 0")
+      .get() as { n: number };
+    return row.n;
+  }
+
+  private matrices = new Map<string, VectorMatrix | null>();
+
+  /**
+   * Contiguous L2-normalized vector matrix for one embedding column, loaded
+   * lazily and cached (~11-14 MB each). Rows follow the `names` order;
+   * cosine similarity = dot product. Returns null when the column is empty.
+   */
+  matrix(
+    column: "embedding_semantic" | "embedding_visualdesc" | "embedding_visual",
+  ): VectorMatrix | null {
+    const cached = this.matrices.get(column);
+    if (cached !== undefined) return cached;
+
+    const rows = this.db
+      .prepare(
+        `SELECT name, ${column} AS vec FROM symbols
+         WHERE ${column} IS NOT NULL AND deprecated = 0 ORDER BY name`,
+      )
+      .all() as { name: string; vec: Uint8Array }[];
+    if (rows.length === 0) {
+      this.matrices.set(column, null);
+      return null;
+    }
+    const first = rows[0] as { name: string; vec: Uint8Array };
+    const dims = first.vec.byteLength / 4;
+    const vectors = new Float32Array(rows.length * dims);
+    const names = new Array<string>(rows.length);
+    rows.forEach((row, i) => {
+      names[i] = row.name;
+      vectors.set(
+        new Float32Array(row.vec.buffer, row.vec.byteOffset, dims),
+        i * dims,
+      );
+    });
+    const matrix: VectorMatrix = { names, vectors, dims };
+    this.matrices.set(column, matrix);
+    return matrix;
+  }
+}
+
+export interface VectorMatrix {
+  names: string[];
+  /** Row-major, L2-normalized; row i = names[i]. */
+  vectors: Float32Array;
+  dims: number;
+}
+
+/** Top-k rows by dot product (cosine, since rows are normalized). */
+export function topKSimilar(
+  matrix: VectorMatrix,
+  query: Float32Array,
+  k: number,
+): { name: string; score: number }[] {
+  const { names, vectors, dims } = matrix;
+  const scores: { name: string; score: number }[] = [];
+  for (let row = 0; row < names.length; row++) {
+    let dot = 0;
+    const offset = row * dims;
+    for (let i = 0; i < dims; i++) {
+      dot += (vectors[offset + i] as number) * (query[i] as number);
+    }
+    scores.push({ name: names[row] as string, score: dot });
+  }
+  scores.sort((a, b) => b.score - a.score);
+  return scores.slice(0, k);
 }

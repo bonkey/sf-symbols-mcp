@@ -1,5 +1,6 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { CatalogStore } from "../store/catalog-store.js";
+import type { QueryEmbedder } from "../embed/embedder.js";
 import { SearchEngine } from "../search/engine.js";
 import {
   getInfoInputShape,
@@ -14,8 +15,12 @@ const json = (value: unknown) => ({
   content: [{ type: "text" as const, text: JSON.stringify(value, null, 2) }],
 });
 
-export function registerTools(server: McpServer, store: CatalogStore): void {
-  const engine = new SearchEngine(store);
+export function registerTools(
+  server: McpServer,
+  store: CatalogStore,
+  embedder?: QueryEmbedder,
+): void {
+  const engine = new SearchEngine(store, embedder);
 
   server.registerTool(
     "search_sf_symbols",
@@ -30,7 +35,7 @@ export function registerTools(server: McpServer, store: CatalogStore): void {
         "substantially improve ranking.",
       inputSchema: searchInputShape,
     },
-    async (args) => json(engine.search(SearchInputSchema.parse(args))),
+    async (args) => json(await engine.search(SearchInputSchema.parse(args))),
   );
 
   server.registerTool(

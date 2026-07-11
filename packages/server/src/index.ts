@@ -4,6 +4,7 @@ import { existsSync } from "node:fs";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { CatalogStore } from "./store/catalog-store.js";
+import { TransformersEmbedder } from "./embed/embedder.js";
 import { registerTools } from "./tools/register.js";
 
 const [major, minor] = process.versions.node.split(".").map(Number);
@@ -38,14 +39,30 @@ async function resolveDbPath(): Promise<string> {
   process.exit(1);
 }
 
+async function resolveModelDir(): Promise<string | undefined> {
+  const fromEnv = process.env["SF_SYMBOLS_MCP_MODEL_DIR"];
+  if (fromEnv && existsSync(fromEnv)) return fromEnv;
+  try {
+    const data = await import("@sf-symbols-mcp/data");
+    if (existsSync(data.modelDir)) return data.modelDir;
+  } catch {
+    // data package absent — transformers.js falls back to its cache.
+  }
+  return undefined;
+}
+
 const dbPath = await resolveDbPath();
 const store = new CatalogStore(dbPath);
+const embedder = new TransformersEmbedder(await resolveModelDir());
+// Warm the embedding model in the background; early queries run lexical-only.
+void embedder.embedQuery("warmup").catch(() => {});
 
 const server = new McpServer({ name: "sf-symbols-mcp", version: "0.1.0" });
-registerTools(server, store);
+registerTools(server, store, embedder);
 
 await server.connect(new StdioServerTransport());
 console.error(
   `sf-symbols-mcp ready — catalog ${store.meta("sfSymbolsVersion")} ` +
-    `(${store.symbolCount()} symbols, profile ${store.meta("profile")})`,
+    `(${store.symbolCount()} symbols, ${store.annotatedCount()} annotated, ` +
+    `profile ${store.meta("profile")})`,
 );

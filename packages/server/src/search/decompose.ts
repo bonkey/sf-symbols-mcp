@@ -26,6 +26,13 @@ const DIRECTIONS = new Set([
   "counterclockwise",
 ]);
 
+/**
+ * Auxiliary display verbs: too generic to define the icon's action
+ * ("show an error", "open the chat"). They never become primaryAction —
+ * the accompanying noun carries the intent.
+ */
+const GENERIC_VERBS = new Set(["show", "open", "view", "display", "go", "see"]);
+
 /** Light suffix stemmer — precision over recall (full Porter over-stems "settings"→"set"). */
 export function lightStem(word: string): string {
   if (word.length <= 3) return word;
@@ -37,15 +44,25 @@ export function lightStem(word: string): string {
   return word;
 }
 
-/** Resolve a verb-ish token to its canonical action, if the lexicons know it. */
+/** Resolve a verb-ish token (or two-word phrase like "sign out") to its canonical action. */
 export function canonicalAction(word: string): string | null {
-  const lower = word.toLowerCase();
-  for (const candidate of [lower, lightStem(lower)]) {
+  const lower = word.toLowerCase().trim();
+  const candidates = [lower, lightStem(lower)];
+  if (/[\s-]/.test(lower)) {
+    const joined = lower.replaceAll(/[\s-]+/g, "");
+    candidates.push(joined, lightStem(joined));
+  }
+  for (const candidate of candidates) {
     if (ACTIONS[candidate]) return candidate;
     const viaSynonym = SYNONYMS[candidate];
     if (viaSynonym) return viaSynonym;
   }
   return null;
+}
+
+/** Convention keys reachable from a token pair ("dark mode" -> "dark-mode"/"darkmode"). */
+export function bigramKeys(a: string, b: string): string[] {
+  return [`${a}-${b}`, `${a}${b}`];
 }
 
 export function actionEntry(canonical: string): ActionEntry | null {
@@ -92,8 +109,12 @@ export function decompose(query: string): Decomposition {
 
     if (!direction && DIRECTIONS.has(word)) direction = word;
 
-    if (!primaryAction) {
-      const action = canonicalAction(word);
+    if (!primaryAction && !GENERIC_VERBS.has(word)) {
+      // Two-word phrases first ("sign out", "dark mode"), then single tokens.
+      const next = words[i + 1];
+      const action =
+        (next ? canonicalAction(`${word} ${next}`) : null) ??
+        canonicalAction(word);
       if (action) {
         primaryAction = action;
         continue;
