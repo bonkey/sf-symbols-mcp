@@ -7,7 +7,7 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.70.0",
+    "@anthropic-ai/sdk": "^0.110.0",
     "@huggingface/transformers": "^4.2.0",
     "@sfsmcp/schema": "workspace:*",
     "sf-symbols-mcp": "workspace:*",

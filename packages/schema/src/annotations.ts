@@ -67,6 +67,30 @@ export const Pass2SemanticSchema = z.object({
 });
 export type Pass2Semantic = z.infer<typeof Pass2SemanticSchema>;
 
+/**
+ * Lenient result-validation variant of Pass1LiteralSchema: structured outputs
+ * carry the enum constraints only as prose (the SDK moves enums into the
+ * description), so the model occasionally emits near-miss values. Unknown
+ * directions are dropped; unknown enclosures fall back to "none". Checkpoints
+ * store the normalized value, so downstream readers can stay strict.
+ */
+export const Pass1LiteralWireSchema = Pass1LiteralSchema.extend({
+  directions: z
+    .array(z.string())
+    .transform((arr) =>
+      arr.filter((d): d is Direction =>
+        (DirectionSchema.options as readonly string[]).includes(d),
+      ),
+    ),
+  enclosure: z
+    .string()
+    .transform((v): Enclosure =>
+      (EnclosureSchema.options as readonly string[]).includes(v)
+        ? (v as Enclosure)
+        : "none",
+    ),
+});
+
 export const ContradictionSchema = z.object({
   field: z.string(),
   observed: z.string(),
