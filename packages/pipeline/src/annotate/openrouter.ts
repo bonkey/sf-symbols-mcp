@@ -118,8 +118,11 @@ async function callOpenRouter(
       await new Promise((r) => setTimeout(r, 2000 * 2 ** attempt));
     }
     let response: Awaited<ReturnType<typeof undiciFetch>>;
+    const transport = process.env["SFS_TRANSPORT"] ?? "undici";
+    const useSignal = process.env["SFS_NO_TIMEOUT"] !== "1";
+    const doFetch = transport === "global" ? fetch : undiciFetch;
     try {
-      response = await undiciFetch(OPENROUTER_URL, {
+      response = (await doFetch(OPENROUTER_URL, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${apiKey}`,
@@ -128,15 +131,16 @@ async function callOpenRouter(
           "X-Title": "sf-symbols-mcp annotation pipeline",
         },
         body: JSON.stringify(body),
-        // Hung sockets must fail fast and retry on a fresh connection —
-        // observed stalls otherwise cap throughput regardless of pool size.
-        signal: AbortSignal.timeout(60_000),
-        dispatcher,
-      });
+        ...(useSignal && { signal: AbortSignal.timeout(60_000) }),
+        ...(transport === "undici" && { dispatcher }),
+      } as never)) as Awaited<ReturnType<typeof undiciFetch>>;
     } catch (error) {
       lastError =
         error instanceof Error ? `${error.name}: ${error.message}` : "network error";
       continue;
+    }
+    if (process.env["SFS_DEBUG"]) {
+      console.error(`[or] attempt=${attempt} status=${response.status}`);
     }
     if (response.status === 429 || response.status >= 500) {
       lastError = `HTTP ${response.status}`;
@@ -180,6 +184,8 @@ export async function runOpenRouterPass<T>(opts: {
   let succeeded = 0;
   let next = 0;
   let done = 0;
+  let inflight = 0;
+  let peakInflight = 0;
 
   const worker = async (startDelayMs: number) => {
     // Stagger startup so a wide pool doesn't open all connections at once.
@@ -189,6 +195,8 @@ export async function runOpenRouterPass<T>(opts: {
       const item = opts.items[index];
       if (!item) return;
       try {
+        inflight++;
+        peakInflight = Math.max(peakInflight, inflight);
         const body = toOpenRouterBody(item.params, opts.model, opts.routeOnly);
         const text = await callOpenRouter(apiKey, body);
         const value = opts.schema.parse(JSON.parse(extractJson(text)));
@@ -209,9 +217,13 @@ export async function runOpenRouterPass<T>(opts: {
           reason:
             error instanceof Error ? error.message.slice(0, 200) : "unknown",
         });
+      } finally {
+        inflight--;
       }
-      if (++done % 100 === 0) {
-        log(`${opts.pass}: ${done}/${opts.items.length} (${failed.length} failed)`);
+      if (++done % 50 === 0) {
+        log(
+          `${opts.pass}: ${done}/${opts.items.length} (${failed.length} failed, inflight=${inflight}, peak=${peakInflight})`,
+        );
       }
     }
   };
