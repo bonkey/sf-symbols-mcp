@@ -1,5 +1,5 @@
 import type Anthropic from "@anthropic-ai/sdk";
-import { Agent } from "undici";
+import { Agent, fetch as undiciFetch } from "undici";
 import type { z } from "zod";
 import {
   writeCheckpoint,
@@ -117,9 +117,9 @@ async function callOpenRouter(
     if (attempt > 0) {
       await new Promise((r) => setTimeout(r, 2000 * 2 ** attempt));
     }
-    let response: Response;
+    let response: Awaited<ReturnType<typeof undiciFetch>>;
     try {
-      response = await fetch(OPENROUTER_URL, {
+      response = await undiciFetch(OPENROUTER_URL, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${apiKey}`,
@@ -131,9 +131,8 @@ async function callOpenRouter(
         // Hung sockets must fail fast and retry on a fresh connection —
         // observed stalls otherwise cap throughput regardless of pool size.
         signal: AbortSignal.timeout(60_000),
-        // Non-standard Node extension: route through the dedicated pool.
         dispatcher,
-      } as unknown as RequestInit);
+      });
     } catch (error) {
       lastError =
         error instanceof Error ? `${error.name}: ${error.message}` : "network error";
