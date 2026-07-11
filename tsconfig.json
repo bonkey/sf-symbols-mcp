@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "paths": {
+      "@sfsmcp/schema": ["./packages/schema/src/index.ts"],
+      "@sfsmcp/pipeline": ["./packages/pipeline/src/index.ts"],
+      "sf-symbols-mcp": ["./packages/server/src/index.ts"]
+    }
+  },
+  "include": [
+    "packages/*/src/**/*.ts",
+    "packages/*/test/**/*.ts",
+    "tests/**/*.ts",
+    "eval/**/*.ts",
+    "vitest.config.ts"
+  ]
+}

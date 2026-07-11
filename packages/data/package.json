@@ -1,0 +1,17 @@
+{
+  "name": "@sf-symbols-mcp/data",
+  "version": "0.1.0",
+  "description": "Prebuilt catalog database, annotations, embeddings, and local embedding model for sf-symbols-mcp. Contains no Apple artwork, fonts, or Apple-authored metadata files.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "catalog.db",
+    "manifest.json",
+    "model",
+    "NOTICE"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "name": "sf-symbols-mcp",
+  "version": "0.1.0",
+  "description": "MCP server that finds the right SF Symbol for a UI function using layered semantic search over verified catalog entries.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "bin": {
+    "sf-symbols-mcp": "./dist/index.js"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "NOTICE"
+  ],
+  "scripts": {
+    "build": "tsdown src/index.ts --format esm --out-dir dist --no-external @sfsmcp/schema"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@huggingface/transformers": "^4.2.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@sfsmcp/schema": "workspace:*",
+    "tsdown": "^0.15.0"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "sf-symbols",
+    "icons",
+    "semantic-search",
+    "ios",
+    "macos",
+    "swiftui"
+  ]
+}

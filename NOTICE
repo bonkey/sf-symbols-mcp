@@ -1,0 +1,33 @@
+Apple IP notice
+===============
+
+This project does NOT include, embed, or redistribute any Apple artwork,
+fonts, symbol images, SVG templates, or Apple-authored metadata files.
+
+SF Symbols, San Francisco (SF Pro / SF Compact / SF Mono), and all symbol
+artwork are copyright Apple Inc. and are licensed by Apple only for designing
+and developing software for Apple platforms, under the SF Symbols app license,
+the Xcode and Apple SDKs Agreement (section 2.11, "System-Provided Images"),
+and Apple's Human Interface Guidelines.
+
+To use the optional local-extraction and rendering features of this tool you
+must install the SF Symbols app yourself from
+https://developer.apple.com/sf-symbols/ and accept Apple's license. This tool
+reads Apple's data from your local installation; any symbol previews are
+rendered locally on your Mac via public macOS APIs, are stored only on your
+machine, and must not be redistributed or used outside Apple-platform software
+development.
+
+Symbol names (e.g. "tray.and.arrow.down") are used as factual identifiers for
+interoperability. Textual descriptions of symbols in this repository and its
+published data packages are independently authored and do not reproduce Apple
+artwork.
+
+Some symbols (marked in the SF Symbols app) may not be modified and may be
+used only "as-is" to refer to the specific Apple technology they represent;
+symbols may never be used in app icons, logos, or in any trademark-related
+way.
+
+Trademarks: Apple, SF Symbols, the Apple logo, macOS, iOS, and related marks
+are trademarks of Apple Inc., registered in the U.S. and other countries.
+This project is not affiliated with, endorsed, or sponsored by Apple Inc.

@@ -1,0 +1,40 @@
+# Dependencies / build outputs
+node_modules/
+dist/
+*.tsbuildinfo
+renderer/.build/
+
+# All locally generated, Apple-derived artifacts live here and are NEVER committed
+generated-local/
+
+# Safety net: Apple artwork, fonts, and asset catalogs must never enter the repo.
+# (Synthetic test fixtures are plain-text/binary plists under fixtures/ with
+# invented content only — enforced by tests/ci-guard.test.ts, not by ignore rules.)
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.pdf
+*.otf
+*.ttf
+*.woff
+*.woff2
+*.car
+
+# Apple metadata files by name, wherever they might get copied by accident
+name_availability.plist
+symbol_categories.plist
+symbol_search.plist
+layerset_availability.plist
+name_aliases.strings
+legacy_aliases.strings
+symbol_restrictions.strings
+symbol_order.plist
+nofill_to_fill.strings
+legacy_flippable.plist
+semantic_to_descriptive_name.strings
+
+# OS noise
+.DS_Store
+*.log

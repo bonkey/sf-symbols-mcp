@@ -1,0 +1,26 @@
+{
+  "name": "sf-symbols-mcp-monorepo",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "packageManager": "pnpm@11.11.0",
+  "scripts": {
+    "build": "pnpm -r --filter './packages/*' build",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json",
+    "extract": "tsx packages/pipeline/src/cli.ts extract",
+    "render": "tsx packages/pipeline/src/cli.ts render",
+    "features": "tsx packages/pipeline/src/cli.ts features",
+    "annotate": "tsx packages/pipeline/src/cli.ts annotate",
+    "build-data": "tsx packages/pipeline/src/cli.ts build-db",
+    "eval": "tsx eval/run-eval.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}
